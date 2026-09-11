@@ -1,6 +1,9 @@
 // Vue 3 写法
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home/home.vue'; // 注意路径
+import Login from '../views/Login/login.vue';
+import Register from '../views/Register/register.vue';
+import ChangePassword from '../views/ChangePassword/ChangePassword.vue';
 
 const routes = [
   {
@@ -8,6 +11,25 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {title:'龙娘都会打的九个字'}
+  },
+
+  {
+    path:'/login',
+    name:'Login',
+    component: Login,
+    meta: {title:'大手子请登录'}
+  },
+  {
+    path:'/register',   
+    name: 'Register',
+    component: Register,
+    meta: {title:'希望工程注册'}
+  },
+  {
+    path:'/changePassowrd',   
+    name: 'ChangePassword',
+    component: ChangePassword,
+    meta: {title:'花来！'}
   },
 ]
 
