@@ -4,6 +4,7 @@ import Home from '../views/Home/home.vue'; // 注意路径
 import Login from '../views/Login/login.vue';
 import Register from '../views/Register/register.vue';
 import ChangePassword from '../views/ChangePassword/ChangePassword.vue';
+import Account from '../views/Account/account.vue'
 
 const routes = [
   {
@@ -30,6 +31,12 @@ const routes = [
     name: 'ChangePassword',
     component: ChangePassword,
     meta: {title:'花来！'}
+  },
+  {
+    path:'/account',   
+    name: 'Account',
+    component: Account,
+    meta: {title:'喜欢你就是喜欢你，我的心dokidoki'}
   },
 ]
 
