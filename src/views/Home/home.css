@@ -1,0 +1,76 @@
+.home {
+    min-height: 100vh;
+    background: white;
+    .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 10086;
+
+        background-image: 
+            linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+            url("/background_home.jpeg");
+
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: left center;
+        border-bottom: 5px solid rgb(0, 232, 255);
+
+        .nav_inner {
+
+            max-width: 1980px;
+
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 68px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+
+            .logo {
+                display: flex;
+
+                justify-content: flex-start;
+                align-items: center;
+                font-size: 36px;
+                font-weight: bolder;
+                color: black;
+
+            }
+        }
+
+        .nav_actions {
+            
+            display: flex;
+            justify-content: flex-end;
+            gap: 5px;
+            .login{
+                .login_text{
+                    color: red;
+                }
+            }
+
+            .btn_text , .btn_changePwd{
+                border: none;
+                border-radius: 10px;
+                font-size: 14px;
+                font-weight: 600;
+                padding: 9px 10px;
+                font-family: inherit;
+                background-color:rgba(88, 255, 255, 0.3);
+                color: red;
+            }
+
+            .btn_text:hover {
+                color: blue;
+            }
+
+        }
+    }
+    /* ============ 主体（留空） ============ */
+    .main_content {
+    /* 这里留空，自行添加功能模块 */
+    }
+}
