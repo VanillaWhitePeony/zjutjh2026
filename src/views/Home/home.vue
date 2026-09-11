@@ -12,8 +12,8 @@ function goLogout() {
   userStore.logout()
   router.push('/')
 }
-function goChangePassword() {
-  router.push({ name: 'ChangePassword' })
+function goAccount() {
+  router.push({ name: 'Account' })
 }
 </script>
 
@@ -30,7 +30,7 @@ function goChangePassword() {
                     <div class="login" v-if="userStore.isLoggedIn">
                         <span class="login_text">欢迎光临全家，</span>
                         <span>{{userStore.username}}</span>
-                        <button class="btn_changePwd" @click="goChangePassword">修改密码</button>
+                        <button class="btn_account" @click="goAccount">看看你的账户</button>
                     </div>
                     <div class="btn">
                         <button
