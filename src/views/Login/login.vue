@@ -15,7 +15,7 @@ const loading=ref(false);
 
 async function login(){            
     if(!username.value.trim() || !password.value.trim()){
-        alert('对方不知道你发了什么，于是决定萌混过关——人话就是，不要交空白的')
+        alert('对方不知道你发了什么，于是决定萌混过关Ciallo～(∠・ω< )⌒☆——人话就是，不要交空白的')
         return;
     }
     loading.value=true;
@@ -45,23 +45,23 @@ async function login(){
 <template>  
     <div class="container">  
         <div class="login_container">
-            <p align="center">我把这个框放在右边自有我的道理（）</p>
-            <p align="right"><del>其实没有道理～～～</del></p>
+            <p class="login-title">登录</p>
             <div class="account">
-                <span>账号:</span><input type="text" v-model="username" class="account_input">
+                <input placeholder="请输入账号" type="text" v-model="username" class="account_input">
             </div>
             <div class="password">
-                <span>密码:</span><input type="password" v-model="password" class="password_input">
+                <input placeholder="请输入密码" type="password" v-model="password" class="password_input">
             </div>
             <div class="login_button">
                 <button @click="login()" :disabled="loading" class="btn_login">
-                    {{ loading ? '登录中...' : '登录' }}
+                    {{ loading ? '登录中...' : '确认登录' }}
                 </button>
             </div>
             <nav>
                 <ul>
                     <li class="return"><router-link to="/">首页</router-link></li>
-                    <li class="return"><router-link to="/register">还没有账号？</router-link></li>
+                    <li class="return"><router-link to="/register">注册</router-link></li>
+                    <li>请欣赏凌波丽的神颜！谢谢！</li>
                 </ul>
             </nav>
         </div>
