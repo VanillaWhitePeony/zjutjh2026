@@ -4,14 +4,15 @@ import Home from '../views/Home/home.vue'; // 注意路径
 import Login from '../views/Login/login.vue';
 import Register from '../views/Register/register.vue';
 import ChangePassword from '../views/ChangePassword/ChangePassword.vue';
-import Account from '../views/Account/account.vue'
+import Account from '../views/Account/account.vue';
+import Items from '../views/Items/PostMessage.vue';
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home,
-    meta: {title:'龙娘都会打的九个字'}
+    meta: {title:'失物招领首页'}
   },
 
   {
@@ -38,6 +39,13 @@ const routes = [
     component: Account,
     meta: {title:'喜欢你就是喜欢你，我的心dokidoki'}
   },
+
+  {
+    path:'/postMessage',
+    name:'PostMessage',
+    component:PostMessage,
+    meta:{title:'拾取到什么装备啦？'}
+  }
 ]
 
 const router = createRouter({
