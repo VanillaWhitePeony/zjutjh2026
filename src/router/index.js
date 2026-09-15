@@ -5,7 +5,7 @@ import Login from '../views/Login/login.vue';
 import Register from '../views/Register/register.vue';
 import ChangePassword from '../views/ChangePassword/ChangePassword.vue';
 import Account from '../views/Account/account.vue';
-import Items from '../views/Items/PostMessage.vue';
+import PostMessage from '../views/Items/PostMessage.vue';
 
 const routes = [
   {
