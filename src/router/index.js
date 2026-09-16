@@ -1,5 +1,6 @@
 // Vue 3 写法
 import { createRouter, createWebHistory } from 'vue-router';
+import{useUserStore}from '../store/user';
 import Home from '../views/Home/home.vue'; // 注意路径
 import Login from '../views/Login/login.vue';
 import Register from '../views/Register/register.vue';
@@ -44,7 +45,9 @@ const routes = [
     path:'/postMessage',
     name:'PostMessage',
     component:PostMessage,
-    meta:{title:'拾取到什么装备啦？'}
+    meta:{title:'拾取到什么装备啦？',
+        requiresAuth:true
+    }
   }
 ]
 
@@ -56,7 +59,19 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
   }
+
+  const userStore=useUserStore()
+
+  if (to.meta.requiresAuth&&!userStore.isLoggedIn) {
+    next({
+      path:'/login',
+      query:{redirect:to.fullPath}
+    })
+    
+  }
   next()
 })
+
+
 
 export default router
