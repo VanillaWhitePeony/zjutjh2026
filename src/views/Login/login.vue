@@ -2,11 +2,12 @@
 import { useUserStore } from '@/store/user'; //全局存储
 import axios from 'axios'; //请求
 import { ref } from 'vue'; //变量
-import { useRouter } from 'vue-router'; //router 
+import { useRouter,useRoute } from 'vue-router'; //router 
 
 import { url } from '@/config.js';
 
 const router=useRouter()//router
+const route=useRoute()
 const userStore=useUserStore()//全局存储
 
 const username=ref('');
