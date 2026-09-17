@@ -50,34 +50,36 @@ async function register(){
 <template>  
     <div class="container">
         <div class="register_container">
-            <p align="center"><del>白牡丹，我好喜欢你，我好喜欢你🤤</del></p>
-            <p align="center">看什么看，好好注册</p>
+            <p class="register-title">注册</p>
+            <p class="白牡丹夹带的私活" align="center"><del>白牡丹，我好喜欢你，我好喜欢你🤤</del></p>
+            <p class="白牡丹夹带的私活" align="center">看什么看，好好注册</p>
             <div class="account">
-                <span>账号:</span><input type="text" v-model="username" class="account_input">
+                <input placeholder="请输入账号" type="text" v-model="username" class="account_input">
             </div>
             <div class="nickname">
-                <span>名字:</span><input type="text" v-model="nickname" class="account_input">
+                <input placeholder="请输入昵称" type="text" v-model="nickname" class="account_input">
             </div>
             <div class="studentNo">
-                <span>学号:</span><input type="text" v-model="studentNo" class="account_input">
+                <input placeholder="请输入学号" type="text" v-model="studentNo" class="account_input">
             </div>
             <div class="phone">
-                <span>电话:</span><input type="text" v-model="phone" class="account_input">
+                <input placeholder="请输入电话号码" type="text" v-model="phone" class="account_input">
             </div>
             <div class="email">
-                <span>邮箱:</span><input type="text" v-model="email" class="account_input">
+                <input placeholder="请输入邮箱地址" type="text" v-model="email" class="account_input">
             </div>
             <div class="password">
-                <span>密码:</span><input type="password" v-model="password" class="password_input">
+                <input placeholder="请输入密码" type="password" v-model="password" class="password_input">
             </div>
             <div class="register_button">
                 <button @click="register()":disabled="loading" class="btn_register">
-                    {{ loading ? '注册中...' : '注册' }}
+                    {{ loading ? '注册中...' : '点击注册' }}
                 </button>
             </div>
             <nav>
                 <ul>
                 <li class="return"><router-link to="/">首页</router-link></li>
+                <li class="return"><router-link to="/login">返回登录</router-link></li>
                 </ul>
             </nav>
         </div>

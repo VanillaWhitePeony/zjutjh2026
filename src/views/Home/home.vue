@@ -15,6 +15,9 @@ function goLogout() {
 function goAccount() {
   router.push({ name: 'Account' })
 }
+function goPost(){
+    router.push({name:'PostMessage'})
+}
 </script>
 
 <template>
@@ -49,6 +52,13 @@ function goAccount() {
                 </div>
             </div>
         </header>
+
+
+        <div class="post">
+            <botton @click="goPost">
+                发布帖子
+            </botton>
+        </div>
 
         <main class="main_content">
             <!-- 在这里添加你的功能模块 -->
