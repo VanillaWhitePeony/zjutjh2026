@@ -43,7 +43,7 @@ async function changePassword() {
                 }
             }
         )
-        if (response.data.code) {
+        if (response.data.code===200) {
             alert('旧密码，旧密码当然是……')
             userStore.logout()
             router.push({ name: 'Login' })

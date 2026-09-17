@@ -2,7 +2,7 @@
 import { useUserStore } from '@/store/user'; //全局存储
 import axios from 'axios'; //请求
 import { ref } from 'vue'; //变量
-import { useRouter,useRoute } from 'vue-router'; //router 
+import { useRoute, useRouter } from 'vue-router'; //router 
 
 import { url } from '@/config.js';
 
@@ -28,7 +28,7 @@ async function login(){
                 password:password.value
             }
         );
-        if(response.data.code){
+        if(response.data.code===200){
             userStore.login(response.data.data)
             alert('欢迎光临全家！！！')
             router.push('/')

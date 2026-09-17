@@ -33,7 +33,7 @@ async function register(){
                 email:email.value
             }
         );
-        if(response.data.code){
+        if(response.data.code===200){
             alert('恭喜你报名了希望工程，我要收过路肺了！！！')
             router.push('/login')
         }
