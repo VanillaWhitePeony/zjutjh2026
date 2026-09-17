@@ -14,7 +14,9 @@ const roleMap = {
 function goChangePassword() {
     router.push({ name: 'ChangePassword' })
 }
-
+function goHome() {
+    router.push({ name: 'Home' })
+}
 function maskPhone(phone) {
     return phone.replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2')
     /*
@@ -37,7 +39,7 @@ function maskPhone(phone) {
                     <span class="logo_text">"失物"招领平台の人材市场の人才</span>
                 </div>
                 <div class="nav_actions">
-                    <button class="btn_back" @click="router.back()">回家の诱惑</button>
+                    <button class="btn_back" @click="goHome">回家の诱惑</button>
                 </div>
             </div>
         </header>

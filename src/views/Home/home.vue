@@ -18,6 +18,9 @@ function goAccount() {
 function goPost(){
     router.push({name:'PostMessage'})
 }
+function goPrivilege(){
+    router.push({ name:'userDetail'})
+}
 </script>
 
 <template>
@@ -32,7 +35,7 @@ function goPost(){
                 <div class="nav_actions">
                     <div class="login" v-if="userStore.isLoggedIn">
                         <span class="login_text">欢迎光临全家，</span>
-                        <span>{{userStore.username}}</span>
+                        <span>{{userStore.user.nickname}}</span>
                         <button class="btn_account" @click="goAccount">看看你的账户</button>
                     </div>
                     <div class="btn">
@@ -47,7 +50,6 @@ function goPost(){
                             class="btn_text"
                             @click="goLogout"
                         >登出</button>
-
                     </div>
                 </div>
             </div>
@@ -58,6 +60,16 @@ function goPost(){
             <botton @click="goPost">
                 发布帖子
             </botton>
+        </div>
+
+        <div class="admin_privilege" v-if="userStore.isLoggedIn && userStore.user.role==='admin'">
+            <div class="btn">
+                <button class="btn_text"
+                    @click="goPrivilege"
+                >
+                    查看用户详情
+                </button>
+            </div>
         </div>
 
         <main class="main_content">
