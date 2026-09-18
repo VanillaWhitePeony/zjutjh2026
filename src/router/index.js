@@ -2,12 +2,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import{useUserStore}from '../store/user';
 import Home from '../views/Home/home.vue'; // 注意路径
-import Login from '../views/Login/login.vue';
-import Register from '../views/Register/register.vue';
-import ChangePassword from '../views/ChangePassword/ChangePassword.vue';
-import Account from '../views/Account/account.vue';
+import Login from '../views/AccountArrange/Login/login.vue';
+import Register from '../views/AccountArrange/Register/register.vue';
+import ChangePassword from '../views/AccountArrange/ChangePassword/ChangePassword.vue';
+import Account from '../views/AccountArrange/Account/account.vue';
 import PostMessage from '../views/Items/PostMessage.vue';
-
+import userDetail from '../views/AdminPrivilege/UserDetailList/UserDetailList.vue'
 const routes = [
   {
     path: '/',
@@ -48,7 +48,13 @@ const routes = [
     meta:{title:'拾取到什么装备啦？',
         requiresAuth:true
     }
-  }
+  },
+  {
+    path:'/userDetailList',
+    name:'userDetail',
+    component:userDetail,
+    meta:{title:'让我看看你的账号正不正常'}
+  },
 ]
 
 const router = createRouter({
