@@ -8,3 +8,4 @@ app.use(router)   // 必须调用
 app.use(createPinia())
 app.mount('#app')
 //createApp(App).use(router).mount('#app')
+//
