@@ -107,6 +107,10 @@ const displayPages=computed(function(){
     }
     return pages;
 })
+
+function goToDetail(id){
+    router.push(`/userDetailList/${id}`)
+}
 </script>
 
 <template>
@@ -135,7 +139,11 @@ const displayPages=computed(function(){
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in users" :key="item.userId" class="user_row">
+                    <tr 
+                        v-for="item in users" 
+                        :key="item.userId" 
+                        class="user_row"
+                        >
                         <td>
                             <img
                                 v-if="item.avatar"
@@ -167,6 +175,9 @@ const displayPages=computed(function(){
                         </td>
                         <td>
                             {{ item.createTime }}
+                        </td>
+                        <td>
+                            <button @click="goToDetail(item.userId)">查看</button>
                         </td>
                     </tr>
                     <tr v-if="users.length===0">

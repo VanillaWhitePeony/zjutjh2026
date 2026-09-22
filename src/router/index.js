@@ -1,13 +1,14 @@
 // Vue 3 写法
 import { createRouter, createWebHistory } from 'vue-router';
-import{useUserStore}from '../store/user';
-import Home from '../views/Home/home.vue'; // 注意路径
+import { useUserStore } from '../store/user';
+import Account from '../views/AccountArrange/Account/account.vue';
+import ChangePassword from '../views/AccountArrange/ChangePassword/ChangePassword.vue';
 import Login from '../views/AccountArrange/Login/login.vue';
 import Register from '../views/AccountArrange/Register/register.vue';
-import ChangePassword from '../views/AccountArrange/ChangePassword/ChangePassword.vue';
-import Account from '../views/AccountArrange/Account/account.vue';
+import userDetailList from '../views/AdminPrivilege/UserDetailList/UserDetailList.vue';
+import Home from '../views/Home/home.vue'; // 注意路径
 import PostMessage from '../views/Items/PostMessage.vue';
-import userDetail from '../views/AdminPrivilege/UserDetailList/UserDetailList.vue'
+import userDetail from '../views/AdminPrivilege/UserDetail/UserDetail.vue'
 const routes = [
   {
     path: '/',
@@ -51,9 +52,16 @@ const routes = [
   },
   {
     path:'/userDetailList',
-    name:'userDetail',
-    component:userDetail,
+    name:'userDetailList',
+    component:userDetailList,
     meta:{title:'让我看看你的账号正不正常'}
+  },
+  {
+    path:'/userDetailList/:id',   
+    name: 'userDetail',
+    component: userDetail,
+    props: true ,
+    meta: {title:'捅死我喵'}
   },
 ]
 
