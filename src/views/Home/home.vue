@@ -19,7 +19,7 @@ function goPost(){
     router.push({name:'PostMessage'})
 }
 function goPrivilege(){
-    router.push({ name:'userDetail'})
+    router.push({ name:'userDetailList'})
 }
 </script>
 
