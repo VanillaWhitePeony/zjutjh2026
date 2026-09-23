@@ -9,6 +9,8 @@ import userDetailList from '../views/AdminPrivilege/UserDetailList/UserDetailLis
 import Home from '../views/Home/home.vue'; // 注意路径
 import PostMessage from '../views/Items/PostMessage.vue';
 import userDetail from '../views/AdminPrivilege/UserDetail/UserDetail.vue'
+import stats from '../views/AdminPrivilege/stats/stats.vue'
+
 const routes = [
   {
     path: '/',
@@ -62,6 +64,12 @@ const routes = [
     component: userDetail,
     props: true ,
     meta: {title:'捅死我喵'}
+  },
+  {
+    path:'/stats',
+    name:'stats',
+    component:stats,
+    meta:{title:'神秘统计数据'}
   },
 ]
 
