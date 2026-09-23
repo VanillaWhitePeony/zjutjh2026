@@ -84,6 +84,9 @@ function goStats(){
             <!-- 在这里添加你的功能模块 -->
         </main>
   </div>
+  <!--
+        这git用的捅死我得了
+  -->
 </template>
 
 <style scoped>
