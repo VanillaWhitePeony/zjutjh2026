@@ -67,6 +67,7 @@ async function deleteUser() {
 }
 
 // 重置密码
+/*
 async function resetPassword() {
     if (!confirm(`确定要重置用户「${user.value?.username}」的密码吗？\n新密码将通过脑电波让ta知道。`)) {
         return;
@@ -96,6 +97,8 @@ async function resetPassword() {
         alert('重置密码失败，坏坏');
     }
 }
+*/
+
 onMounted(getUserDetail);
 </script>
 
@@ -170,6 +173,7 @@ onMounted(getUserDetail);
                     <span class="value">{{ user.claimCount }}</span>
                 </li>
             </ul>
+            <!--
             <div class="reset">
                 <button
                     @click="resetPassword"
@@ -178,6 +182,7 @@ onMounted(getUserDetail);
                     重置密码
                 </button>
             </div>
+            -->
             <div class="delete">
                 <button
                     v-if="canDelete"
