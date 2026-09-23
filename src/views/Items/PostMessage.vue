@@ -33,7 +33,7 @@
         const files=Array.from(e.target.files||[]);
         e.target.value='';
         if(!files.length) return;
-        //最大樟树
+        //最大张数
         if(form.value.images.length+files.length>MAX_IMAGE_COUNT){
             errorMessage.value='最多上传五张照片';
             alert('最多上传五张照片');
@@ -134,12 +134,8 @@
     <div class="publishPage">
         <h2>发布失物信息</h2>
 
-    <div>
-        <label>帖子类型</label>
-        <input v-model="form.type" placeholder="lost/found">
-    </div>
-<!--这里是我的设想，可以大家看完之后决定用不用-->
-<!--
+    
+
     <div>
         <label>帖子类型</label>
         <select v-model="form.type">
@@ -148,7 +144,6 @@
             <option value="found">失物招领：我捡到了东西</option>
         </select>
     </div>
-    -->
     <div>
         <label>标题 </label>
         <input v-model="form.title" placeholder="例如：丢失一把黑色雨伞">

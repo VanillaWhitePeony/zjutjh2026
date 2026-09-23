@@ -55,9 +55,9 @@ function goPost(){
 
 
         <div class="post">
-            <botton @click="goPost">
+            <button @click="goPost">
                 发布帖子
-            </botton>
+            </button>
         </div>
 
         <main class="main_content">
