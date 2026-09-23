@@ -143,7 +143,7 @@ function goToDetail(id){
                         v-for="item in users" 
                         :key="item.userId" 
                         class="user_row"
-                        >
+                    >
                         <td>
                             <img
                                 v-if="item.avatar"
@@ -151,7 +151,7 @@ function goToDetail(id){
                                 class="avatar"
                                 alt="avatar"
                             />
-                            <span v-else class="avatar_placeholder">无</span>
+                            <span v-else class="avatar_placeholder">略</span>
                         </td>
                         <td>
                             {{ item.username }}

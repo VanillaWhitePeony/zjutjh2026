@@ -21,6 +21,9 @@ function goPost(){
 function goPrivilege(){
     router.push({ name:'userDetailList'})
 }
+function goStats(){
+    router.push({ name:'stats'})
+}
 </script>
 
 <template>
@@ -67,7 +70,12 @@ function goPrivilege(){
                 <button class="btn_text"
                     @click="goPrivilege"
                 >
-                    查看用户详情
+                    偷看用户信息
+                </button>
+                <button class="btn_text"
+                    @click="goStats"
+                >
+                    查看神秘统计数据
                 </button>
             </div>
         </div>
