@@ -8,7 +8,7 @@
         type:'',/*这里原先计划的是选择lost还是found
         哎但我感觉这个能不能单独提出来（后面有时间可以优化一下）*/
         title:'',
-        categoryId:'',
+        category:'',
         description:'',
         location:'',
         lostTime:'',
@@ -151,7 +151,15 @@
 
     <div>
         <label>分类编号</label>
-        <input v-model="form.categoryId" placeholder="这里是不是要规定不同的分类标准啊">
+        <select v-model="form.category">
+            <option value="">请选择联系方式</option>
+            <option value="card">证件卡类</option>
+            <option value="book">书籍文具</option>
+            <option value="clothing">衣物饰品</option>
+            <option value="digital">电子产品</option>
+            <option value="wallet">钱包钥匙</option>
+            <option value="other">其他</option>
+        </select>
     </div>
 
     <div>

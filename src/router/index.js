@@ -7,6 +7,8 @@ import Register from '../views/Register/register.vue';
 import ChangePassword from '../views/ChangePassword/ChangePassword.vue';
 import Account from '../views/Account/account.vue';
 import PostMessage from '../views/Items/PostMessage.vue';
+import PostList from '../views/Items/PostList.vue';
+import PostDetails from '../views/Items/PostDetails.vue';
 
 const routes = [
   {
@@ -49,7 +51,25 @@ const routes = [
         requiresAuth:true
     }
   }
+
+  {
+    path:'/postDetails',
+    name:'PostDetails',
+    component:PostDetails,
+    meta:{title:'严肃品鉴中……'}
+  }
+
+  {
+    path:'/postList',
+    name:'PostList',
+    component:PostList,
+    meta:{title:'wc这个板块怎么这么他妈的复杂啊'}
+  }
+
+
 ]
+
+
 
 const router = createRouter({
   history: createWebHistory(),

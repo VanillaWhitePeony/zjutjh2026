@@ -50,12 +50,11 @@ const query=reactive({
     keyword:'',
     category:'',
     page:'',
-    pageSize:'',
-    time:''
+    pageSize:''
 })
 
 
-//日期范围查询用,数组
+//日期范围查询用,单独拿出来
 const dateRange=ref([]);
 
 //
@@ -84,7 +83,7 @@ async function fetchList() {
         const res =await request.get('/api/items',{params:buildQueryParams()})
         list.value=res.data?.records??[]
         totalAmount.value=res.data?.totalAmount??0
-    }catch(err){//返回code
+    }catch(err){
         console.error(err)
         erMessage.error('加载失败')
         list.value=[]
@@ -94,8 +93,67 @@ async function fetchList() {
     }
 }
 
+function search() {//搜索从首页开始
+  query.page = 1
+  fetchList()
+}
 
+function research() {//重新搜索要把村的信息清空
+  query.keyword  = ''
+  query.type     = ''
+  query.category = ''
+  query.status   = ''
+  query.page     = 1
+  dateRange.value = []
+  fetchList()
+}
 
+function changePageSize() {//改变最大条数时重新从第一页开始
+  query.page = 1
+  fetchList()
+}
+
+function goDetails(item) {//点击进入详情页
+  router.push({ name: 'ItemDetails', params: { id: item.id } })
+}
+
+watch(//ai加的，下拉筛选变化时及时刷新
+  () => [query.type, query.category, query.status, dateRange.value],
+  () => {
+    query.page = 1
+    fetchList()
+  }
+)
 
 
 </script>
+
+<template>
+    <div class="itemListPage">
+        <!--分页-->
+        <div class="paginate">
+            <el-paginate
+                v-model:current-page="query.page"
+                v-model:page-size="query.pageSize"
+                :total="totalAmount"
+                layout="total,prev,pager,next,jumper"
+                @current-change="fetchList"/>
+        </div>
+
+        <div class="max-mount-everypage">
+            <span>每页</span>
+            <el-input-number
+                v-model="query.pageSize"
+                :min="1"
+                :max="50"
+                step-strictly
+                controls-position="right"
+                size="small"
+                @change="changePageSize"/>
+        </div>
+    </div>
+
+
+
+
+</template>
