@@ -1,0 +1,86 @@
+.container{
+    font-family: "Poppins";
+    user-select: none;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-image: 
+    url("/background_login.jpg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position:top;
+    .login-title{
+        font-size: 2.5rem;
+        line-height: 1.75rem;
+        font-weight: 800;
+        text-align: center;
+        color:rgb(86, 146, 242)
+    }
+    .return{
+        color: black;
+    }
+    height: 100vh;
+    .login_container{
+        margin-left: -800px;
+        background-color:rgb(201, 214, 246);
+        padding: 5em;
+        display:flex;
+        flex-direction: column;
+        border-radius: 30px;
+        box-shadow: 0 0 2em #e6e9f9;
+        gap: 3em;
+        
+        .account{
+            width: 300px;
+            background: white;
+            box-shadow: 0 0 2em #e6e9f9;
+            padding: 1em;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+            border-radius: 20px;
+            color: #4d4d4d;
+        }
+        .account_input{
+            outline: none;
+            border: none;
+        }
+        .password {
+            background: white;
+            box-shadow: 0 0 2em #e6e9f9;
+            padding: 1em;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+            border-radius: 20px;
+            color: #4d4d4d;
+        }
+        .password_input {
+            outline: none;
+            border: none;
+        }
+        .login_button {
+            cursor: pointer;
+            display: flex;
+            justify-content: flex-end;
+            .btn_login {
+                display:block;
+                padding-top:0.75rem;
+                padding-bottom:0.75rem;
+                padding-left:1.25rem;
+                padding-right:1.25rem;
+                background-color:cornflowerblue;
+                color:aliceblue;
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                font-weight: 500;
+                width: 100%;
+                border-radius: 0.5rem;
+            }
+        }
+        
+    }
+    
+}
