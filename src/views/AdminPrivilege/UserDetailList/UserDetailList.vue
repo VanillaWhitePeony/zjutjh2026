@@ -1,11 +1,13 @@
 <script setup>
 //以下用于实现分页获取用户列表
 import { url } from '@/config.js';
+import { useUserStore } from '@/store/user';
 import axios from 'axios';
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router=useRouter();
+const userStore = useUserStore()
 
 const users=ref([]);
 const loading=ref(false);
@@ -114,7 +116,10 @@ function goToDetail(id){
 </script>
 
 <template>
-    <div class="user_detail_list_container">
+    <div v-if="! (userStore.user.role==='admin')" class="error">
+        <span>不是管理员喵，你是凑企鹅</span>
+    </div>
+    <div v-else class="user_detail_list_container">
         <nav class="navbar">
             <button @click="goHome" class="btn">常回家看看</button>
         </nav>
