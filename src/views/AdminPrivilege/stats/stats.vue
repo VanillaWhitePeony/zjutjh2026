@@ -1,10 +1,12 @@
 <script setup>
 import { url } from '@/config.js';
+import { useUserStore } from '@/store/user';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const userStore = useUserStore()
 
 const data = ref({});
 const loading = ref(false);
@@ -65,7 +67,10 @@ onMounted(getData);
 </script>
 
 <template>
-    <div class="stats_container">
+    <div v-if="! (userStore.user.role==='admin')" class="error">
+        <span>不是管理员喵，你是凑企鹅</span>
+    </div>
+    <div v-else class="stats_container">
         <button @click="goBack" class="btn">回家看看</button>
 
         <div v-if="loading" class="loading">努力加载中...</div>

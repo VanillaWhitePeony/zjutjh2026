@@ -10,6 +10,8 @@ import Home from '../views/Home/home.vue'; // 注意路径
 import PostMessage from '../views/Items/PostMessage.vue';
 import userDetail from '../views/AdminPrivilege/UserDetail/UserDetail.vue'
 import stats from '../views/AdminPrivilege/stats/stats.vue'
+import auditItem from '../views/AdminPrivilege/Audit/AuditItem/AuditItem.vue'
+import auditClaim from '../views/AdminPrivilege/Audit/AuditClaim/AuditClaim.vue'
 
 const routes = [
   {
@@ -71,6 +73,19 @@ const routes = [
     component:stats,
     meta:{title:'神秘统计数据'}
   },
+  {
+    path:'/auditItem',
+    name:'auditItem',
+    component:auditItem,
+    meta:{title:'神鹤！'}
+  },
+  {
+    path:'/auditClaim',
+    name:'auditClaim',
+    component:auditClaim,
+    meta:{title:'我的认领已经饥渴难耐了'}
+  },
+
 ]
 
 const router = createRouter({

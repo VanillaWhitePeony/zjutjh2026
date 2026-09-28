@@ -24,6 +24,12 @@ function goPrivilege(){
 function goStats(){
     router.push({ name:'stats'})
 }
+function goAuditItem(){
+    router.push({ name:'auditItem'})
+}
+function goAuditClaim(){
+    router.push({ name:'auditClaim'})
+}
 </script>
 
 <template>
@@ -76,6 +82,16 @@ function goStats(){
                     @click="goStats"
                 >
                     查看神秘统计数据
+                </button>
+                <button class="btn_text"
+                    @click="goAuditItem"
+                >
+                    审核丢失/发现管理（Go Work！）
+                </button>
+                <button class="btn_text"
+                    @click="goAuditClaim"
+                >
+                    审核认领管理（Go Work！）
                 </button>
             </div>
         </div>

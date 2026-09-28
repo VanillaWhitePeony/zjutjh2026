@@ -108,7 +108,10 @@ onMounted(getUserDetail);
         白牡丹我喜欢你
     </div>
     -->
-    <div class="userdetail_container">
+    <div v-if="! (userStore.user.role==='admin')" class="error">
+        <span>不是管理员喵，你是凑企鹅</span>
+    </div>
+    <div v-else class="userdetail_container">
         <button @click="goBack" class="btn">回家看看</button>
 
         <div v-if="loading" class="loading">努力加载中...</div>
