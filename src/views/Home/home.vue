@@ -30,6 +30,9 @@ function goAuditItem(){
 function goAuditClaim(){
     router.push({ name:'auditClaim'})
 }
+function goAnnouncements(){
+    router.push({ name:'announcements'})
+}
 </script>
 
 <template>
@@ -69,6 +72,11 @@ function goAuditClaim(){
             <botton @click="goPost">
                 发布帖子
             </botton>
+            <button class="btn_text"
+                    @click="goAnnouncements"
+                >
+                    查看各种公共场合发电注水记录
+            </button>
         </div>
 
         <div class="admin_privilege" v-if="userStore.isLoggedIn && userStore.user.role==='admin'">

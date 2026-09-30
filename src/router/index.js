@@ -12,7 +12,10 @@ import userDetail from '../views/AdminPrivilege/UserDetail/UserDetail.vue'
 import stats from '../views/AdminPrivilege/stats/stats.vue'
 import auditItem from '../views/AdminPrivilege/Audit/AuditItem/AuditItem.vue'
 import auditClaim from '../views/AdminPrivilege/Audit/AuditClaim/AuditClaim.vue'
-
+import announcements from '../views/Announcements/Announcements/announcements.vue'
+import AnnouncementsDetail from '../views/Announcements/AnnouncementsDetail/AnnouncementsDetail.vue'
+import AnnouncementsPost from '../views/Announcements/AnnouncementsPost/AnnouncementsPost.vue'
+import AnnouncementsEdit from '../views/Announcements/AnnouncementsEdit/AnnouncementsEdit.vue'
 const routes = [
   {
     path: '/',
@@ -85,7 +88,32 @@ const routes = [
     component:auditClaim,
     meta:{title:'我的认领已经饥渴难耐了'}
   },
-
+  {
+    path: '/announcements',
+    name: 'announcements',
+    component: announcements,
+    meta: {title:'老大老大，你真的会认真看嘛'}
+  },
+  {
+    path:'/announcements/:id',   
+    name: 'AnnouncementsDetail',
+    component: AnnouncementsDetail,
+    props: true ,
+    meta: {title:'老大我相思了'}
+  },
+  {
+    path:'/announcements/post',   
+    name: 'AnnouncementsPost',
+    component: AnnouncementsPost,
+    meta: {title:'创作鼠鼠笑话'}
+  },
+  {
+    path:'/announcements/:id/edit',
+    name: 'AnnouncementsEdit',
+    component: AnnouncementsEdit,
+    props: true,
+    meta: {title:'鼠鼠笑话不好笑，写米莉拉野史'}
+},
 ]
 
 const router = createRouter({

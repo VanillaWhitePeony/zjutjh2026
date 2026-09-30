@@ -236,7 +236,7 @@ function rejectItem(claim){
                             </div>
                         </td>
                         <td>
-                            <span class="status_tag" :class="'status_'+claim.status">
+                            <span class="status_tag" >
                                 {{ statusMap[claim.status]}}
                             </span>
                         </td>
