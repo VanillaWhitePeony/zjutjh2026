@@ -129,12 +129,13 @@ onMounted(getAnnouncementDetail);
                 </label>
             </div>
 
+            <!--
             <div v-if="announcement.status === 'published'" class="form_item">
                 <label>发布时间：</label>
                 <span class="value">自动同步当前时间</span>
             </div>
-
-            <div v-else class="form_item">
+            --->
+            <div class="form_item">
                 <label>发布时间（留空表示不改）：</label>
                 <input
                     v-model="publishAt"
