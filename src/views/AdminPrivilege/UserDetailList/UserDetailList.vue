@@ -174,7 +174,7 @@ function goToDetail(id){
                             {{ item.email }}
                         </td>
                         <td>
-                            <span class="role_tag" :class="'role_'+item.role">
+                            <span class="role_tag">
                                 {{ roleMap[item.role]}}
                             </span>
                         </td>
