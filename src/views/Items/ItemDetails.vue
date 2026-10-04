@@ -3,7 +3,7 @@
     import{ useRouter }from 'vue-router';
     import request from '@/Request/request';
     import {useUserStore} from '@/store/user';
-    import { userInfo } from '';//怎么找不到了……明明记得之前看到写过这个的
+    import PostDelete from './PostDelete.vue';
     import{ form }from '@/views/Items/PostMessage.vue'
     const route=useRouter()
     const itemId=number(route.params.itemId)//??????
@@ -47,6 +47,16 @@ onMounted(fetchDetails)
 
 
 <template>
+    <div>
+        <DeletePost
+        :post-id="post.id"
+        :owner-id="post.ownerId"
+        :current-user-id="currentUserId"
+        :is-admin="isAdmin"
+        :redirect-home="true"
+        redirect-to="/home"
+        />
+    </div>
     <div class="ItemDetails">
         <div v-if="loading">在努力中了……</div>
         <div v-else-if="errorMessage">

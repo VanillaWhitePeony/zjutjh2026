@@ -1,9 +1,20 @@
 <script setup>
-    import { ref } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
     import { useRouter } from 'vue-router';
     import request from '@/Request/request';
 
 
+    const props = defineProps({
+        postId: {
+            type: [String, Number],default:''
+        }
+    });
+    const isEdit=computed(()=>!!props.postId);
+
+    const pageLoading=ref(false);//页面加载状态
+    const owerId=ref('');//物品所有者id
+    const currentUserId=ref('');//当前登录用户id
+    const isOwner=computed(()=>ownerId.value===currentUserId.value);//当前登录用户是否是物品所有者
     const form=ref({//表单
         type:'',/*这里原先计划的是选择lost还是found
         哎但我感觉这个能不能单独提出来（后面有时间可以优化一下）*/
@@ -27,6 +38,39 @@
     const MAX_IMAGE_COUNT=5;
     const MAX_IMAGE_SIZE=5*1024*1024//接口规定的5mb
 
+    /*onMounted(async()=>{
+        pageLoading.value=true;
+        try{
+            const response=await request.get('/api/user/current');
+            currentUserId.value=response.data.id;
+            if(isEdit.value){
+                const postResponse=await request.get(`/api/items/${props.postId}`);
+                const postData=postResponse.data;
+                ownerId.value=postData.ownerId;
+                if(!isOwner.value){
+                    alert('你没有权限编辑该物品信息');
+                    router.push('/home');
+                    return;
+                }
+                form.value={
+                    type:postData.type,
+                    title:postData.title,
+                    category:postData.category,
+                    description:postData.description,
+                    location:postData.location,
+                    lostTime:postData.lostTime,
+                    images:postData.images||[],
+                    contactType:postData.contactType,
+                    contactValue:postData.contactValue
+                }
+            }
+        }catch(error){
+            alert('获取用户信息失败，请重新登录');
+            router.push('/login');
+        }finally{
+            pageLoading.value=false;
+        }
+    })*/
 
     /*照片的处理 */
     async function handleFileChange(e) {
@@ -54,6 +98,10 @@
 
     /*其他信息的录入*/
     async function handleSubmit() {
+        if(isEdit.value&&isOwner.value){
+            alert('你不是发布者，没有权限编辑该物品信息');
+            return;
+        }
         if(uploading.value){
             alert('稍等哦，图片上传中');
             return;
@@ -89,7 +137,7 @@
             alert('什么时候拾取/遗失的呢？')
             return
         }
-        if(new Date(form.value.lostTime).getDate()>Date.now()){
+        if(new Date(form.value.lostTime).getTime()>Date.now()){
             errorMessage.value='拾取/遗失时间不能晚于当前时间';
             alert('拾取/遗失时间不能晚于当前时间');
             return;
@@ -110,9 +158,16 @@
         loading.value=true;
         errorMessage.value='';
         try{
-            await request.post('/items',form.value);
-            alert('提交成功，等待管理员审核后公开展示哦');
-            router.push('/home');
+            if(isEdit.value){
+                await request.put(`/api/items/${props.postId}`,form.value);
+                alert('编辑成功，等待管理员审核后公开展示哦');
+                router.push('/home');
+                return;
+            }else{
+                await request.post('/api/items',form.value);
+                alert('提交成功，等待管理员审核后公开展示哦');
+                router.push('/home');
+            }
         }catch(error){
             if(error.response?.status===401){
                 alert('请先登录');
@@ -126,13 +181,17 @@
             alert('啊哦……出了点小问题');
         }
     }
-         
+         function handleCancel() {
+            router.push('/home');
+        }
 
 </script>
 
 <template>
     <div class="publishPage">
-        <h2>发布失物信息</h2>
+
+        <!--把编辑已发布的信息功能合并到这个里面-->
+        <h2>{{isEdit?'编辑失物信息':'发布失物信息'}}</h2>
 
     
 
@@ -152,7 +211,7 @@
     <div>
         <label>分类编号</label>
         <select v-model="form.category">
-            <option value="">请选择联系方式</option>
+            <option value="">请选择分类</option>
             <option value="card">证件卡类</option>
             <option value="book">书籍文具</option>
             <option value="clothing">衣物饰品</option>
@@ -219,6 +278,10 @@
 
     <button @click="handleSubmit" :disabled="loading">
         {{ loading?'发布中……':'点击发布' }}
+    </button>
+
+    <button v-if="isEdit" type="button " @click="handleCancel" :disabled="loading">
+        {{取消}}
     </button>
     </div>
 </template>

@@ -1,14 +1,18 @@
 // Vue 3 写法
 import { createRouter, createWebHistory } from 'vue-router';
-import{useUserStore}from '../store/user';
+import { useUserStore } from '../store/user';
+import Account from '../views/AccountArrange/Account/account.vue';
+import ChangePassword from '../views/AccountArrange/ChangePassword/ChangePassword.vue';
+import Login from '../views/AccountArrange/Login/login.vue';
+import Register from '../views/AccountArrange/Register/register.vue';
+import userDetailList from '../views/AdminPrivilege/UserDetailList/UserDetailList.vue';
 import Home from '../views/Home/home.vue'; // 注意路径
-import Login from '../views/Login/login.vue';
-import Register from '../views/Register/register.vue';
-import ChangePassword from '../views/ChangePassword/ChangePassword.vue';
-import Account from '../views/Account/account.vue';
 import PostMessage from '../views/Items/PostMessage.vue';
-import PostList from '../views/Items/PostList.vue';
-import PostDetails from '../views/Items/PostDetails.vue';
+import PostEdit from '../views/Items/PostEdit.vue';
+import userDetail from '../views/AdminPrivilege/UserDetail/UserDetail.vue'
+import stats from '../views/AdminPrivilege/stats/stats.vue'
+import auditItem from '../views/AdminPrivilege/Audit/AuditItem/AuditItem.vue'
+import auditClaim from '../views/AdminPrivilege/Audit/AuditClaim/AuditClaim.vue'
 
 const routes = [
   {
@@ -50,31 +54,56 @@ const routes = [
     meta:{title:'拾取到什么装备啦？',
         requiresAuth:true
     }
-  }
-
+  },
   {
-    path:'/postDetails',
-    name:'PostDetails',
-    component:PostDetails,
-    meta:{title:'严肃品鉴中……'}
-  }
-
+    path:'/postEdit/:id',
+    name:'PostEdit',
+    component:PostEdit,
+    meta:{title:'编辑物品信息',
+        requiresAuth:true
+    }
+  },
   {
-    path:'/postList',
-    name:'PostList',
-    component:PostList,
-    meta:{title:'wc这个板块怎么这么他妈的复杂啊'}
-  }
+    path:'/userDetailList',
+    name:'userDetailList',
+    component:userDetailList,
+    meta:{title:'让我看看你的账号正不正常'}
+  },
+  {
+    path:'/userDetailList/:id',   
+    name: 'userDetail',
+    component: userDetail,
+    props: true ,
+    meta: {title:'捅死我喵'}
+  },
+  {
+    path:'/stats',
+    name:'stats',
+    component:stats,
+    meta:{title:'神秘统计数据'}
+  },
+  {
+    path:'/auditItem',
+    name:'auditItem',
+    component:auditItem,
+    meta:{title:'神鹤！'}
+  },
+  {
+    path:'/auditClaim',
+    name:'auditClaim',
+    component:auditClaim,
+    meta:{title:'我的认领已经饥渴难耐了'}
+  },
+
 
 
 ]
-
-
 
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
@@ -82,13 +111,13 @@ router.beforeEach((to, from, next) => {
 
   const userStore=useUserStore()
 
-  /*if (to.meta.requiresAuth&&!userStore.isLoggedIn) {
+  if (to.meta.requiresAuth&&!userStore.isLoggedIn) {
     next({
       path:'/login',
       query:{redirect:to.fullPath}
     })
     
-  }*/
+  }
   next()
 })
 
