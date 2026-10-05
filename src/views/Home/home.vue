@@ -73,7 +73,6 @@ function goAnnouncements(){
                 <button class="nav_item" @click="goPost">发布帖子</button>
                 <button class="nav_item" @click="goClaim">认领物品</button>
                 <button class="nav_item" @click="goCategory">物品分类</button>
-                <button class="nav_item" @click="goAnnouncements">查看公告</button>
             </nav>
 
             <div class="content">
