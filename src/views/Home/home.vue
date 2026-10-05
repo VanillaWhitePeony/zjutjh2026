@@ -30,6 +30,9 @@ function goCategory(){
 function goAnnouncements(){
     router.push({ name:'announcements'})
 }
+function goFavorite(){
+    router.push({ name:'favoriteList'})
+}
 </script>
 
 <template>
@@ -73,6 +76,7 @@ function goAnnouncements(){
                 <button class="nav_item" @click="goPost">发布帖子</button>
                 <button class="nav_item" @click="goClaim">认领物品</button>
                 <button class="nav_item" @click="goCategory">物品分类</button>
+                <button class="nav_item" @click="goFavorite">我的收藏</button>
             </nav>
 
             <div class="content">

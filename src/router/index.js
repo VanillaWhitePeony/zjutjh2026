@@ -17,11 +17,7 @@ import claimPost from '../views/Claim/ClaimPost.vue'
 import myClaimList from '../views/Claim/MyClaimList.vue'
 import claimDetails from '../views/Claim/ClaimDetails.vue'
 import claimCheck from '../views/Claim/ClaimCheck.vue'
-import category from '../views/Category/Category.vue'
-import announcements from '../views/Announcements/Announcements/announcements.vue'
-import AnnouncementsDetail from '../views/Announcements/AnnouncementsDetail/AnnouncementsDetail.vue'
-import AnnouncementsPost from '../views/Announcements/AnnouncementsPost/AnnouncementsPost.vue'
-import AnnouncementsEdit from '../views/Announcements/AnnouncementsEdit/AnnouncementsEdit.vue'
+import favoriteList from '../views/Favorite/favoriteList.vue'
 
 const routes = [
   {
@@ -128,36 +124,10 @@ const routes = [
     meta:{title:'收到的认领申请', requiresAuth:true}
   },
   {
-    path:'/category',
-    name:'category',
-    component:category,
-    meta:{title:'物品分类'}
-  },
-  {
-    path: '/announcements',
-    name: 'announcements',
-    component: announcements,
-    meta: {title:'老大老大，你真的会认真看嘛'}
-  },
-  {
-    path:'/announcements/:id',   
-    name: 'AnnouncementsDetail',
-    component: AnnouncementsDetail,
-    props: true ,
-    meta: {title:'老大我相思了'}
-  },
-  {
-    path:'/announcements/post',   
-    name: 'AnnouncementsPost',
-    component: AnnouncementsPost,
-    meta: {title:'创作鼠鼠笑话'}
-  },
-  {
-    path:'/announcements/:id/edit',
-    name: 'AnnouncementsEdit',
-    component: AnnouncementsEdit,
-    props: true,
-    meta: {title:'鼠鼠笑话不好笑，写米莉拉野史'}
+    path:'/favoriteList',
+    name:'favoriteList',
+    component:favoriteList,
+    meta:{title:'我的收藏', requiresAuth:true}
   },
 
 
