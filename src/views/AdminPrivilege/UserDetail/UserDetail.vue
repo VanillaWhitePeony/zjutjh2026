@@ -13,7 +13,7 @@ const loading = ref(false);
 
 const props = defineProps({
     id: { type: String, required: true }
-});
+});//获取id
 
 const roleMap = {
     student: '学生',

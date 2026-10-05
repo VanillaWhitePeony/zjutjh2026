@@ -27,6 +27,9 @@ function goClaim(){
 function goCategory(){
     router.push({name:'category'})
 }
+function goAnnouncements(){
+    router.push({ name:'announcements'})
+}
 </script>
 
 <template>
@@ -64,17 +67,13 @@ function goCategory(){
             </div>
         </header>
 
-
-        
-
-        
-
         <main class="main_content">
             <nav class="nav_menu">
                 <button class="nav_item" @click="goHome">首页</button>
                 <button class="nav_item" @click="goPost">发布帖子</button>
                 <button class="nav_item" @click="goClaim">认领物品</button>
                 <button class="nav_item" @click="goCategory">物品分类</button>
+                <button class="nav_item" @click="goAnnouncements">查看公告</button>
             </nav>
 
             <div class="content">
