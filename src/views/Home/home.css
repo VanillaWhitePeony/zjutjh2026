@@ -1,5 +1,7 @@
 .home {
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     background: white;
     .navbar {
         position: sticky;
@@ -16,33 +18,27 @@
         border-bottom: 5px solid rgb(0, 232, 255);
 
         .nav_inner {
-
             max-width: 1980px;
-
             margin: 0 auto;
             padding: 0 24px;
             height: 68px;
 
             display: flex;
-
             align-items: center;
             justify-content: space-between;
             gap: 10px;
 
             .logo {
                 display: flex;
-
                 justify-content: flex-start;
                 align-items: center;
                 font-size: 36px;
                 font-weight: bolder;
                 color: black;
-
             }
         }
 
         .nav_actions {
-            
             display: flex;
             justify-content: flex-end;
             gap: 5px;
@@ -66,11 +62,141 @@
             .btn_text:hover {
                 color: blue;
             }
-
         }
     }
-    /* ============ 主体（留空） ============ */
+
+    
     .main_content {
-    /* 这里留空，自行添加功能模块 */
+        flex: 1;
+        display: flex;
+        gap: 24px;
+        padding: 24px;
+        box-sizing: border-box;
+
+        .nav_menu {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 200px;
+            flex-shrink: 0;
+        }
+
+        .nav_item {
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            border: none;
+            border-radius: 999px;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 14px 0;
+            font-family: inherit;
+            background-color: #414181;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: 0.25s ease;
+        }
+
+        .nav_item:hover {
+            background-color: #00005c;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+        }
+
+        .content {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* 上：公告 */
+        .announcement {
+            flex: 1;
+            background: #f5f7fb;
+            border-radius: 12px;
+            padding: 16px 20px;
+            overflow: auto;
+        }
+
+        .announcement h2 {
+            margin: 0 0 12px;
+            color: #333;
+        }
+
+        .announcement_list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .announcement_item {
+            background: #fff;
+            border: 1px solid #e6e9f2;
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #444;
+        }
+
+        /* 下：失物招领帖子 */
+        .posts {
+            flex: 1;
+            background: #f5f7fb;
+            border-radius: 12px;
+            padding: 16px 20px;
+            overflow: auto;
+        }
+
+        .search_box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .search_box input {
+            flex: 1;
+            min-width: 0;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .search_btn {
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            background: #1677ff;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .search_btn:hover {
+            background: #4096ff;
+        }
+
+        .post_grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .post_card {
+            flex: 1 1 200px;
+            min-width: 160px;
+            height: 130px;
+            background: #fff;
+            border: 1px solid #e6e9f2;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
     }
 }

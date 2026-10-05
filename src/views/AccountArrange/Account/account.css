@@ -1,0 +1,141 @@
+.account {
+    min-height: 100vh;
+    background: #f5f7fb;
+}
+
+.navbar {
+    background: #fff;
+    border-bottom: 1px solid #e6e9f2;
+}
+
+.nav_inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo_text {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+.btn_back {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    background: #eef2f7;
+    color: #444;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn_back:hover {
+    background: #e2e8f0;
+}
+
+.main_content {
+    max-width: 1200px;
+    margin: 24px auto;
+    padding: 0 24px;
+}
+
+.account_card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    padding: 32px;
+}
+
+.card_title {
+    margin: 0 0 20px;
+    font-size: 20px;
+    color: #333;
+}
+
+.profile {
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.user_photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.modifier {
+    display: inline-block;
+    margin-top: 8px;
+    color: #999;
+    font-size: 13px;
+}
+
+.pretext {
+    display: block;
+    color: #999;
+    font-size: 12px;
+    line-height: 1.6;
+    margin: 8px 0;
+}
+
+.nickname {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin: 8px 0;
+}
+
+.role_tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    background: #e6f4ff;
+    color: #1677ff;
+    font-size: 12px;
+}
+
+.info_list {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.info_list li {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.label {
+    width: 120px;
+    color: #999;
+}
+
+.value {
+    color: #333;
+}
+
+.actions {
+    margin-top: 24px;
+}
+
+.btn_change {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    background: #1677ff;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn_change:hover {
+    background: #4096ff;
+}

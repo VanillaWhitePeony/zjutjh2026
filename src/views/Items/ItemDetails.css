@@ -1,0 +1,31 @@
+.ItemDetails {
+    padding: 16px;
+    max-width: 720px;
+}
+
+.adminStatus {
+    padding: 10px 14px;
+    background: #fff7e6;
+    color: #d48806;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.ItemDetails h1 {
+    margin: 12px 0 8px;
+    font-size: 22px;
+    color: #333;
+}
+
+.ItemDetails div {
+    margin: 8px 0;
+    color: #444;
+}
+
+.ItemDetails p {
+    margin: 4px 0;
+}
+
+.error {
+    color: #d33;
+}

@@ -1,0 +1,15 @@
+.itemListPage {
+    padding: 16px;
+}
+
+.paginate {
+    margin-bottom: 12px;
+}
+
+.max-mount-everypage {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    font-size: 14px;
+}

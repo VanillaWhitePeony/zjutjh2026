@@ -18,6 +18,15 @@ function goAccount() {
 function goPost(){
     router.push({name:'PostMessage'})
 }
+function goHome(){
+    router.push({name:'Home'})
+}
+function goClaim(){
+    router.push({name:'claimPost'})
+}
+function goCategory(){
+    router.push({name:'category'})
+}
 </script>
 
 <template>
@@ -48,20 +57,51 @@ function goPost(){
                             @click="goLogout"
                         >登出</button>
 
+                        
+
                     </div>
                 </div>
             </div>
         </header>
 
 
-        <div class="post">
-            <button @click="goPost">
-                发布帖子
-            </button>
-        </div>
+        
+
+        
 
         <main class="main_content">
-            <!-- 在这里添加你的功能模块 -->
+            <nav class="nav_menu">
+                <button class="nav_item" @click="goHome">首页</button>
+                <button class="nav_item" @click="goPost">发布帖子</button>
+                <button class="nav_item" @click="goClaim">认领物品</button>
+                <button class="nav_item" @click="goCategory">物品分类</button>
+            </nav>
+
+            <div class="content">
+                <section class="announcement">
+                    <h1>公告</h1>
+                    <div class="announcement_list">
+                        <div class="announcement_item">测试公告</div>
+                        <div class="announcement_item">测试公告</div>
+                        <div class="announcement_item">测试公告</div>
+                    </div>
+                </section>
+
+                <section class="posts">
+                    <div class="search_box">
+                        <input type="text" placeholder="搜索关键词">
+                        <button class="search_btn">搜索</button>
+                    </div>
+                    <div class="post_grid">
+                        <div class="post_card">失物招领帖子</div>
+                        <div class="post_card">失物招领帖子</div>
+                        <div class="post_card">失物招领帖子</div>
+                        <div class="post_card">失物招领帖子</div>
+                        <div class="post_card">失物招领帖子</div>
+                        <div class="post_card">失物招领帖子</div>
+                    </div>
+                </section>
+            </div>
         </main>
   </div>
 </template>

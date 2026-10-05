@@ -1,0 +1,69 @@
+.claim-post {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+}
+
+.claim-post h2 {
+    margin: 0 0 8px;
+    color: #333;
+}
+
+.claim-post label {
+    display: block;
+    margin-bottom: 4px;
+    color: #444;
+    font-size: 14px;
+}
+
+.claim-post textarea,
+.claim-post input[type='text'] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.claim-post button {
+    align-self: flex-start;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #1677ff;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.claim-post button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.proof-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.proof-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.proof-item button {
+    padding: 4px 10px;
+    background: #ff4d4f;
+    font-size: 13px;
+}
+
+.error {
+    color: #d33;
+    font-size: 13px;
+}
