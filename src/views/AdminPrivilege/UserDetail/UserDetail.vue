@@ -2,7 +2,7 @@
 import { url } from '@/config.js';
 import { useUserStore } from '@/store/user';
 import axios from 'axios';
-import { computed, onMounted, ref } from 'vue';
+import { computed, defineProps, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const userStore = useUserStore();
@@ -114,7 +114,7 @@ onMounted(getUserDetail);
     <div v-else class="userdetail_container">
         <button @click="goBack" class="btn">回家看看</button>
 
-        <div v-if="loading" class="loading">努力加载中...</div>
+        <div v-if="loading" class="loading">少女祈祷中...</div>
 
         <div v-else-if="user" class="detail_card">
             <div class="header">

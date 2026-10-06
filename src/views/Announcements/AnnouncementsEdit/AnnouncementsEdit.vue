@@ -2,7 +2,7 @@
 import { url } from '@/config.js';
 import { useUserStore } from '@/store/user';
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { defineProps, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const userStore = useUserStore();
@@ -99,7 +99,7 @@ onMounted(getAnnouncementDetail);
     <div v-else class="announcement_edit_container">
         <button @click="goBack" class="btn">不想改了</button>
 
-        <div v-if="loading" class="loading">努力加载中...</div>
+        <div v-if="loading" class="loading">少女祈祷中...</div>
 
         <div v-else-if="announcement" class="edit_card">
 
