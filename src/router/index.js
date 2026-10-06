@@ -20,12 +20,12 @@ import myClaimList from '../views/Claim/MyClaimList.vue'
 import claimDetails from '../views/Claim/ClaimDetails.vue'
 import claimCheck from '../views/Claim/ClaimCheck.vue'
 import favoriteList from '../views/Favorite/favoriteList.vue'
-import category from '../views/Category/Category.vue'
 import announcements from '../views/Announcements/Announcements/announcements.vue'
 import AnnouncementsPost from '../views/Announcements/AnnouncementsPost/AnnouncementsPost.vue'
 import AnnouncementsDetail from '../views/Announcements/AnnouncementsDetail/AnnouncementsDetail.vue'
 import AnnouncementsEdit from '../views/Announcements/AnnouncementsEdit/AnnouncementsEdit.vue'
 import myInform from '../views/Inform/myInform.vue'
+import IntellegentMatch from '../views/IntellegentMatch/intellegentMatch.vue'
 
 const routes = [
   {
@@ -90,6 +90,13 @@ const routes = [
     meta:{title:'物品详情'}
   },
   {
+    path:'/intellegentMatch/:itemId',
+    name:'intellegentMatch',
+    component:IntellegentMatch,
+    props:true,
+    meta:{title:'智能匹配推荐'}
+  },
+  {
     path:'/userDetailList',
     name:'userDetailList',
     component:userDetailList,
@@ -149,12 +156,6 @@ const routes = [
     name:'favoriteList',
     component:favoriteList,
     meta:{title:'我的收藏', requiresAuth:true}
-  },
-  {
-    path:'/category',
-    name:'category',
-    component:category,
-    meta:{title:'物品分类'}
   },
   {
     path:'/announcements',

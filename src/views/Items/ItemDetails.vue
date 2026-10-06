@@ -47,6 +47,10 @@ function goClaim() {
   router.push({ name: 'claimPost', params: { itemId: item.value.itemId } })
 }
 
+function goMatch() {
+  router.push({ name: 'intellegentMatch', params: { itemId: item.value.itemId } })
+}
+
 async function fetchDetail() {
   loading.value = true
   errorMessage.value = ''
@@ -104,6 +108,7 @@ onMounted(fetchDetail)
       <!-- 申请认领 / 收藏 -->
       <div class="action_bar">
         <button class="btn_claim" @click="goClaim">申请认领</button>
+        <button class="btn_match" @click="goMatch">智能匹配</button>
         <favorite
           :item-id="item.itemId"
           :is-favorited="!!item.isFavorited"
