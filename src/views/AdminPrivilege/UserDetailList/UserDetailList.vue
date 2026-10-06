@@ -126,7 +126,7 @@ function goToDetail(id){
 
         <h1>全校丢东西和捡东西之人（以及能查看这个页面之人）</h1>
 
-        <div v-if="loading" class="loading">加载中...</div>
+        <div v-if="loading" class="loading">少女祈祷中...</div>
 
         <!--用户表格-->
         <div v-else class="user_detail">

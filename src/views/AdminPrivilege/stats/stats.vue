@@ -2,7 +2,8 @@
 import { url } from '@/config.js';
 import { useUserStore } from '@/store/user';
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import * as echarts from 'echarts';
+import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -14,6 +15,75 @@ const categoryLoading=ref(false);
 const categoryData = ref({})
 const rateLoading=ref(false);
 const rateData = ref({})
+const trendLoading=ref(false);
+const trendData = ref([]);
+const trendChartRef = ref(null);
+let trendChart = null;
+
+async function getTrendData() {
+    trendLoading.value = true;
+    try{
+        const response = await axios.get(`${url}/admin/stats/trend`);
+        if(response.data.code === 200){
+            trendData.value = response.data.data;
+        } else {
+            alert (response.data.msg);
+        }   
+    } finally {
+        trendLoading.value =false;
+        await nextTick();
+        renderTrendChart();
+    }   
+}
+
+function renderTrendChart() {
+    if(! trendChartRef.value){
+        return;
+    }
+    if(! trendChart){
+        trendChart = echarts.init(trendChartRef.value);
+    }
+    const dates = [];
+    const lostCounts = [];
+    const foundCounts = [];
+    for(let i = 0; i < trendData.value.length; i++){
+        dates.push(trendData.value[i].date);
+        lostCounts.push(trendData.value[i].lostCount);
+        foundCounts.push(trendData.value[i].foundCount);
+    }
+    trendChart.setOption({
+        title: { text: '每日新增铸币 / 失物招领趋势' },
+        tooltip: { trigger: 'axis' },
+        legend: { data: ['新增在逃物品', '新增缉拿物品'] },
+        grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: dates
+        },
+        yAxis: { type: 'value' },
+        series: [
+            {
+                name: '新增在逃物品',
+                type: 'line',
+                smooth: true,
+                data: lostCounts
+            },
+            {
+                name: '新增缉拿物品',
+                type: 'line',
+                smooth: true,
+                data: foundCounts
+            }
+        ]
+    });
+}
+
+function handleResize() {
+    if(trendChart){
+        trendChart.resize();
+    }
+}
 
 async function getRateData() {
     rateLoading.value = true;
@@ -26,6 +96,7 @@ async function getRateData() {
         }   
     } finally {
         rateLoading.value =false;
+        getTrendData();
     }   
 }
 
@@ -63,6 +134,17 @@ function goBack() {
 }
 
 onMounted(getData);
+onMounted(function(){
+    window.addEventListener('resize', handleResize);
+});
+
+onBeforeUnmount(function(){
+    window.removeEventListener('resize', handleResize);
+    if(trendChart){
+        trendChart.dispose();
+        trendChart = null;
+    }
+});
 
 </script>
 
@@ -139,7 +221,7 @@ onMounted(getData);
             </table>
         </div>
     </div>
-    <div v-if="rateLoading" class="rate_loading">认领数据赶来中</div>
+    <div v-if="rateLoading" class="rate_loading">少女祈祷中…</div>
     <div v-else class="rate_data">
         <ul class="rate_data_list">
                 <li>
@@ -163,6 +245,10 @@ onMounted(getData);
                     <span class="value">{{ rateData.claimRate }}</span>
                 </li>
             </ul>
+    </div>
+    <div v-if="trendLoading" class="trend_loading">少女祈祷中…</div>
+    <div v-else class="trend_data">
+        <div ref="trendChartRef" class="trend_chart" style="width: 100%; height: 360px;"></div>
     </div>
 </template>
 
