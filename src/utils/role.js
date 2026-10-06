@@ -15,6 +15,11 @@ export function isAdminRole(role) {
     return ADMIN_ROLES.includes(role)
 }
 
+// 是否为失物招领管理员（仅审核权限）
+export function isLfAdminRole(role) {
+    return role === 'lf_admin'
+}
+
 // 角色名转展示文案
 export function roleText(role) {
     return ROLE_MAP[role] || role || '未知'

@@ -39,13 +39,13 @@ const routes = [
     path:'/login',
     name:'Login',
     component: Login,
-    meta: {title:'大手子请登录'}
+    meta: {title:'我想知道你的冥字'}
   },
   {
     path:'/register',   
     name: 'Register',
     component: Register,
-    meta: {title:'希望工程注册'}
+    meta: {title:'我就是那个L啊'}
   },
   {
     path:'/changePassowrd',   
@@ -124,7 +124,7 @@ const routes = [
     path:'/claimPost/:itemId?',
     name:'claimPost',
     component:claimPost,
-    meta:{title:'申请认领', requiresAuth:true}
+    meta:{title:'你要气死爸爸吗？', requiresAuth:true}
   },
   {
     path:'/myClaimList',
@@ -136,7 +136,7 @@ const routes = [
     path:'/claimDetails',
     name:'claimDetails',
     component:claimDetails,
-    meta:{title:'认领详情', requiresAuth:true}
+    meta:{title:'累死老子了我靠', requiresAuth:true}
   },
   {
     path:'/claimCheck',

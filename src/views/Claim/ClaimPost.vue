@@ -162,6 +162,9 @@ async function submit() {
 
 <template>
   <div class="claim-post">
+    <video class="bg_video" autoplay muted loop playsinline>
+      <source src="/background_account.mp4" type="video/mp4">
+    </video>
     <h2>申请认领</h2>
 
     <div>

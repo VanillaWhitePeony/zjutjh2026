@@ -7,10 +7,11 @@
     align-items: center;
     width: 100%;
     background-image: 
-    url("public/background_register.jpg");
+    url("/background_login.jpg");
     background-repeat: no-repeat;
-    background-size: cover;
-    background-position: left center;
+    background-size: contain;
+    background-position: center;
+    background-color: #eef3ff;
     .白牡丹夹带的私活{
         font-size: 10px;
     }
@@ -27,7 +28,7 @@
     height: 100vh;
     .register_container{
         margin-left: -1000px;
-        background: #f1f7fe;
+        background: rgba(241, 247, 254, 0.65);
         padding: 5em;
         display: flex;
         flex-direction: column;
@@ -117,7 +118,7 @@
                 padding-bottom:0.75rem;
                 padding-left:1.25rem;
                 padding-right:1.25rem;
-                background-color:cornflowerblue;
+                background-color:rgb(3, 3, 3);
                 color:aliceblue;
                 font-size: 0.875rem;
                 line-height: 1.25rem;

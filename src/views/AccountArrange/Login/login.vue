@@ -62,7 +62,7 @@ async function login(){
                 <ul>
                     <li class="return"><router-link to="/">首页</router-link></li>
                     <li class="return"><router-link to="/register">注册</router-link></li>
-                    <li>请欣赏凌波丽的神颜！谢谢！</li>
+                    <li>我要成为新世界的卡密</li>
                 </ul>
             </nav>
         </div>

@@ -2,11 +2,40 @@
     max-width: 640px;
     margin: 0 auto;
     padding: 24px 16px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    font-size: 17px;
+    color: #111;
+}
+
+.bg_video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.publishPage > *:not(.bg_video) {
+    position: relative;
+    z-index: 1;
+    width: 100%;
 }
 
 .publishPage h2 {
     margin: 0 0 16px;
-    color: #333;
+    color: #111;
+    font-size: 28px;
+    text-align: center;
 }
 
 .publishPage > div {
@@ -16,8 +45,8 @@
 .publishPage label {
     display: block;
     margin-bottom: 4px;
-    color: #444;
-    font-size: 14px;
+    color: #222;
+    font-size: 16px;
 }
 
 .publishPage input,
@@ -26,7 +55,8 @@
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 6px;
-    font-size: 14px;
+    font-size: 16px;
+    color: #111;
     box-sizing: border-box;
 }
 
@@ -37,7 +67,7 @@
     background: #1677ff;
     color: #fff;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     margin-right: 8px;
 }
 
@@ -52,5 +82,5 @@
 
 .error {
     color: #d33;
-    font-size: 13px;
+    font-size: 16px;
 }

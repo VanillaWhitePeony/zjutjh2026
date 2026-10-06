@@ -13,6 +13,9 @@ const pageSize = ref(10)
 const total = ref(0)
 const typeFilter = ref('')
 
+// 已加载的全部通知（用于前端筛选，兼容 mock 不支持 type 参数的情况）
+const allNotifications = ref([])
+
 const totalPages = computed(() => Math.ceil(total.value / pageSize.value))
 
 const typeOptions = [
@@ -35,6 +38,16 @@ const typeMap = {
   system: '系统通知'
 }
 
+// 前端分页（按类型筛选后）
+function renderLocal() {
+  const filtered = typeFilter.value
+    ? allNotifications.value.filter((n) => n.type === typeFilter.value)
+    : allNotifications.value
+  total.value = filtered.length
+  const start = (currentPage.value - 1) * pageSize.value
+  notifications.value = filtered.slice(start, start + pageSize.value)
+}
+
 async function getNotifications(page = 1) {
   loading.value = true
   try {
@@ -46,9 +59,17 @@ async function getNotifications(page = 1) {
     })
     if (res.data.code === 200) {
       const d = res.data.data || {}
-      notifications.value = d.list || []
-      total.value = Number(d.total) || 0
-      currentPage.value = Number(d.page) || page
+      const serverList = d.list || []
+      if (typeFilter.value) {
+        // 有筛选时在前端过滤，保证筛选真实生效
+        allNotifications.value = serverList
+        currentPage.value = 1
+        renderLocal()
+      } else {
+        notifications.value = serverList
+        total.value = Number(d.total) || 0
+        currentPage.value = Number(d.page) || page
+      }
     } else {
       alert(res.data.msg || '获取通知失败')
     }
@@ -67,7 +88,9 @@ function changeType() {
 function goToPage(page) {
   page = Number(page)
   if (page < 1 || page > totalPages.value || page === currentPage.value) return
-  getNotifications(page)
+  currentPage.value = page
+  if (typeFilter.value) renderLocal()
+  else getNotifications(page)
 }
 
 onMounted(() => getNotifications(1))

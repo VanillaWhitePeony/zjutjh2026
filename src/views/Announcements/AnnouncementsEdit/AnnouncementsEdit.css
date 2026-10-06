@@ -2,7 +2,7 @@
     padding: 40px;
     text-align: center;
     color: #e5484d;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .announcement_edit_container {
@@ -10,15 +10,24 @@
     margin: 0 auto;
     padding: 24px;
     min-height: 100vh;
-    background: #f5f7fb;
+    background: rgba(245, 247, 251, 0.8);
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 17px;
+    color: #111;
+}
+
+.announcement_edit_container > * {
+    width: 100%;
 }
 
 .btn {
     border: none;
     border-radius: 8px;
     padding: 8px 16px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     font-family: inherit;
     background: #1677ff;
@@ -34,11 +43,12 @@
 .loading {
     padding: 40px;
     text-align: center;
-    color: #999;
+    color: #555;
+    font-size: 17px;
 }
 
 .edit_card {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     padding: 24px;
@@ -52,8 +62,8 @@
 .form_item label {
     display: block;
     margin-bottom: 8px;
-    color: #555;
-    font-size: 14px;
+    color: #222;
+    font-size: 16px;
 }
 
 .input_text {
@@ -62,7 +72,8 @@
     padding: 9px 12px;
     border: 1px solid #ddd;
     border-radius: 6px;
-    font-size: 14px;
+    font-size: 16px;
+    color: #111;
     font-family: inherit;
 }
 
@@ -72,7 +83,8 @@
     padding: 9px 12px;
     border: 1px solid #ddd;
     border-radius: 6px;
-    font-size: 14px;
+    font-size: 16px;
+    color: #111;
     font-family: inherit;
     min-height: 140px;
     resize: vertical;
@@ -89,14 +101,15 @@
     align-items: center;
     gap: 6px;
     cursor: pointer;
-    color: #555;
+    color: #222;
+    font-size: 16px;
 }
 
 .value {
     display: inline-block;
     margin-left: 8px;
-    color: #999;
-    font-size: 13px;
+    color: #555;
+    font-size: 15px;
 }
 
 .form_actions {
@@ -110,5 +123,6 @@
 .empty {
     padding: 40px;
     text-align: center;
-    color: #999;
+    color: #555;
+    font-size: 17px;
 }

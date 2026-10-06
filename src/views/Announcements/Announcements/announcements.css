@@ -3,13 +3,24 @@
     margin: 0 auto;
     padding: 24px;
     min-height: 100vh;
-    background: #f5f7fb;
+    background: rgba(245, 247, 251, 0.8);
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 17px;
+    color: #111;
+}
+
+.announcement_container > * {
+    width: 100%;
 }
 
 .announcement_container h1 {
-    color: #333;
+    color: #111;
     margin: 16px 0 20px;
+    font-size: 32px;
+    text-align: center;
 }
 
 .navbar {
@@ -22,7 +33,7 @@
     border: none;
     border-radius: 8px;
     padding: 8px 16px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     font-family: inherit;
     background: #1677ff;
@@ -40,21 +51,23 @@
     align-items: center;
     gap: 8px;
     margin-bottom: 16px;
-    color: #555;
+    color: #222;
+    font-size: 17px;
 }
 
 .status_select {
     padding: 6px 10px;
     border: 1px solid #ddd;
     border-radius: 6px;
-    font-size: 14px;
+    font-size: 16px;
     background: #fff;
 }
 
 .loading {
     padding: 40px;
     text-align: center;
-    color: #999;
+    color: #555;
+    font-size: 17px;
 }
 
 .announcement_detail {
@@ -74,13 +87,13 @@
     padding: 12px 16px;
     text-align: left;
     border-bottom: 1px solid #f0f0f0;
-    font-size: 14px;
-    color: #444;
+    font-size: 16px;
+    color: #222;
 }
 
 .announcement_table th {
     background: #fafafa;
-    color: #333;
+    color: #111;
     font-weight: 600;
 }
 
@@ -116,8 +129,9 @@
 
 .empty {
     text-align: center;
-    color: #999;
+    color: #555;
     padding: 24px;
+    font-size: 17px;
 }
 
 .page_change {

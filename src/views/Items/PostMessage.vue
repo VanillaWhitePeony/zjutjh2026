@@ -194,6 +194,9 @@
 
 <template>
     <div class="publishPage">
+        <video class="bg_video" autoplay muted loop playsinline>
+            <source src="/background_account.mp4" type="video/mp4">
+        </video>
 
         <!--把编辑已发布的信息功能合并到这个里面-->
         <h2>{{isEdit?'编辑失物信息':'发布失物信息'}}</h2>

@@ -3,7 +3,7 @@
 // 接口：GET /claims/mine?page=&pageSize=
 // 返回：{ total, page, pageSize, list: [{ claimId, itemId, itemTitle, itemCoverImage,
 //         claimReason, status, applicant, createTime }] }
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 import { url } from '@/config.js'
@@ -18,6 +18,17 @@ const errorMessage = ref('')
 const page = ref(1)
 const pageSize = ref(10)
 const total = ref(0)
+const statusFilter = ref('')
+
+// 已加载的全部申请（用于前端筛选，兼容 mock 不支持 status 参数的情况）
+const allClaims = ref([])
+
+const statusOptions = [
+  { label: '待处理', value: 'pending' },
+  { label: '已通过', value: 'approved' },
+  { label: '已驳回', value: 'rejected' },
+  { label: '已撤回', value: 'cancelled' }
+]
 
 const statusMap = {
   pending: '待处理',
@@ -26,19 +37,39 @@ const statusMap = {
   cancelled: '已撤回'
 }
 
+const totalPages = computed(() => Math.ceil(total.value / pageSize.value))
+
+// 前端分页（按状态筛选后）
+function renderLocal() {
+  const filtered = statusFilter.value
+    ? allClaims.value.filter((c) => c.status === statusFilter.value)
+    : allClaims.value
+  total.value = filtered.length
+  const start = (page.value - 1) * pageSize.value
+  list.value = filtered.slice(start, start + pageSize.value)
+}
+
 async function fetchList() {
   loading.value = true
   errorMessage.value = ''
   try {
-    const res = await axios.get(`${url}/claims/mine`, {
-      params: { page: page.value, pageSize: pageSize.value }
-    })
+    const params = { page: page.value, pageSize: pageSize.value }
+    if (statusFilter.value) params.status = statusFilter.value
+    const res = await axios.get(`${url}/claims/mine`, { params })
     if (res.data.code === 200) {
       const data = res.data.data || {}
-      list.value = data.list || []
-      total.value = Number(data.total) || 0
-      page.value = Number(data.page) || 1
-      pageSize.value = Number(data.pageSize) || 10
+      const serverList = data.list || []
+      if (statusFilter.value) {
+        // 有筛选时在前端过滤，保证筛选真实生效
+        allClaims.value = serverList
+        page.value = 1
+        renderLocal()
+      } else {
+        list.value = serverList
+        total.value = Number(data.total) || 0
+        page.value = Number(data.page) || 1
+        pageSize.value = Number(data.pageSize) || 10
+      }
     } else {
       errorMessage.value = res.data.msg || '加载失败'
     }
@@ -55,11 +86,16 @@ async function fetchList() {
   }
 }
 
+function changeStatus() {
+  fetchList()
+}
+
 function goPage(p) {
   p = Number(p)
-  if (p < 1 || p === page.value) return
+  if (p < 1 || p > totalPages.value || p === page.value) return
   page.value = p
-  fetchList()
+  if (statusFilter.value) renderLocal()
+  else fetchList()
 }
 
 function goDetail(claim) {
@@ -73,6 +109,14 @@ onMounted(fetchList)
   <div class="my-claim-list">
     <h2>我的认领申请</h2>
 
+    <div class="filter_bar">
+      <span>状态筛选：</span>
+      <select v-model="statusFilter" @change="changeStatus" class="status_select">
+        <option value="">全部</option>
+        <option v-for="s in statusOptions" :key="s.value" :value="s.value">{{ s.label }}</option>
+      </select>
+    </div>
+
     <p v-if="loading">加载中…</p>
     <p v-else-if="errorMessage" class="error">{{ errorMessage }}</p>
     <p v-else-if="list.length === 0">你还没有提交过认领申请</p>
@@ -80,8 +124,7 @@ onMounted(fetchList)
     <ul v-else class="claim-list">
       <li v-for="claim in list" :key="claim.claimId" class="claim-item">
         <img
-          v-if="claim.itemCoverImage"
-          :src="claim.itemCoverImage"
+          :src="claim.itemCoverImage || '/avatar.jpg'"
           alt="物品封面"
           class="cover"
         >

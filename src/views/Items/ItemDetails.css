@@ -1,6 +1,32 @@
 .ItemDetails {
     padding: 16px;
     max-width: 720px;
+    margin: 0 auto;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    font-size: 17px;
+    color: #111;
+}
+
+.ItemDetails::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: url("/background_post.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7;
+}
+
+.ItemDetails > * {
+    position: relative;
+    z-index: 1;
 }
 
 .adminStatus {
@@ -13,31 +39,34 @@
 
 .ItemDetails h1 {
     margin: 12px 0 8px;
-    font-size: 22px;
-    color: #333;
+    font-size: 28px;
+    color: #111;
 }
 
 .ItemDetails div {
     margin: 8px 0;
-    color: #444;
+    color: #111;
+    font-size: 17px;
 }
 
 .ItemDetails p {
     margin: 4px 0;
+    font-size: 17px;
 }
 
 .error {
     color: #d33;
+    font-size: 17px;
 }
 
 .back {
     border: 1px solid #ddd;
     border-radius: 6px;
     padding: 6px 12px;
-    font-size: 14px;
+    font-size: 16px;
     font-family: inherit;
     background: #fff;
-    color: #444;
+    color: #222;
     cursor: pointer;
     margin-bottom: 8px;
 }
@@ -55,7 +84,7 @@
 
 .type_tag,
 .status_tag {
-    font-size: 12px;
+    font-size: 14px;
     padding: 2px 10px;
     border-radius: 999px;
 }
@@ -67,7 +96,7 @@
 
 .status_tag {
     background: #f0f0f0;
-    color: #666;
+    color: #333;
 }
 
 .img_row {
@@ -99,7 +128,7 @@
     border: 1px solid #1677ff;
     border-radius: 6px;
     padding: 6px 14px;
-    font-size: 14px;
+    font-size: 16px;
     font-family: inherit;
     background: #1677ff;
     color: #fff;

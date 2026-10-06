@@ -34,4 +34,4 @@ request.interceptors.response.use(
 )
 
 export default request
-//拦截什么的感觉还是搞得不是很清楚，这部分ai改了很多
+//拦截什么的感觉还是搞得不是很清楚，这部分ai改了很多(其实全是ai写的吧！)

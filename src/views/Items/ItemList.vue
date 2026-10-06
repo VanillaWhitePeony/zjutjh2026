@@ -60,9 +60,12 @@ const list = ref([])
 const total = ref(0)
 const loading = ref(false)
 
+// 已加载的全部物品（用于前端筛选，兼容 mock 不支持查询参数的情况）
+const allItems = ref([])
+
 const totalPages = computed(() => Math.ceil(total.value / query.pageSize))
 
-// 组装查询参数，空串不传（防止空串被后端过滤掉）
+// 组装查询参数（仍按接口要求传递；空串不传）
 function buildQueryParams() {
   const params = {
     page: query.page,
@@ -71,9 +74,37 @@ function buildQueryParams() {
   if (query.keyword) params.keyword = query.keyword
   if (query.type) params.type = query.type
   if (query.location) params.location = query.location
-  // status 仅管理员可传 pending/rejected；普通账号即便传了后端也会忽略
   if (query.status) params.status = query.status
   return params
+}
+
+// 是否处于筛选状态
+function hasFilter() {
+  return !!(query.keyword || query.type || query.location || query.status)
+}
+
+// 前端筛选：mock 会忽略查询参数，这里保证筛选/搜索真实生效
+function applyFilter(source) {
+  const kw = query.keyword.trim().toLowerCase()
+  const loc = query.location.trim().toLowerCase()
+  return source.filter((it) => {
+    if (query.type && it.type !== query.type) return false
+    if (query.status && it.status !== query.status) return false
+    if (loc && !(it.location || '').toLowerCase().includes(loc)) return false
+    if (kw) {
+      const text = `${it.title || ''} ${it.description || ''} ${it.categoryName || ''}`.toLowerCase()
+      if (!text.includes(kw)) return false
+    }
+    return true
+  })
+}
+
+// 前端分页
+function renderLocal() {
+  const filtered = applyFilter(allItems.value)
+  total.value = filtered.length
+  const start = (query.page - 1) * query.pageSize
+  list.value = filtered.slice(start, start + query.pageSize)
 }
 
 async function fetchList() {
@@ -82,9 +113,17 @@ async function fetchList() {
     const res = await axios.get(`${url}/items`, { params: buildQueryParams() })
     if (res.data.code === 200) {
       const d = res.data.data || {}
-      list.value = d.list || []
-      total.value = Number(d.total) || 0
-      query.page = Number(d.page) || query.page
+      const serverList = d.list || []
+      if (hasFilter()) {
+        // 有筛选时在前端对全量数据过滤，保证结果正确
+        allItems.value = serverList
+        query.page = 1
+        renderLocal()
+      } else {
+        list.value = serverList
+        total.value = Number(d.total) || 0
+        query.page = Number(d.page) || query.page
+      }
     } else {
       alert(res.data.msg || '加载失败')
     }
@@ -116,12 +155,14 @@ function goToPage(page) {
   page = Number(page)
   if (page < 1 || page > totalPages.value || page === query.page) return
   query.page = page
-  fetchList()
+  if (hasFilter()) renderLocal()
+  else fetchList()
 }
 
 function changePageSize() {
   query.page = 1
-  fetchList()
+  if (hasFilter()) renderLocal()
+  else fetchList()
 }
 
 function goDetails(item) {
@@ -184,9 +225,8 @@ onMounted(() => {
     <ul v-else class="item_list">
       <li v-for="item in list" :key="item.itemId" class="item_card" @click="goDetails(item)">
         <img
-          v-if="item.coverImage || (item.images && item.images[0])"
           class="cover"
-          :src="item.coverImage || item.images[0]"
+          :src="item.coverImage || (item.images && item.images[0]) || '/avatar.jpg'"
           alt=""
         >
         <div class="info">
