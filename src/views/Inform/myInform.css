@@ -1,0 +1,118 @@
+.myInformPage {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.myInformPage h1 {
+    margin: 0 0 16px;
+    color: #333;
+}
+
+.filter_bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    color: #666;
+    font-size: 14px;
+}
+
+.type_select {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    background: #fff;
+}
+
+.loading,
+.empty {
+    padding: 40px;
+    text-align: center;
+    color: #999;
+}
+
+.notify_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.notify_item {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.notify_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.title {
+    color: #333;
+    font-weight: 600;
+}
+
+.type_tag {
+    flex-shrink: 0;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #e6f4ff;
+    color: #1677ff;
+}
+
+.content {
+    margin: 0 0 6px;
+    color: #555;
+    font-size: 14px;
+}
+
+.time {
+    margin: 0;
+    color: #999;
+    font-size: 12px;
+}
+
+.page_change {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.btn_page {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fff;
+    color: #444;
+    cursor: pointer;
+}
+
+.btn_page:hover {
+    border-color: #1677ff;
+    color: #1677ff;
+}
+
+.btn_page:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page_info {
+    color: #555;
+    font-size: 14px;
+}

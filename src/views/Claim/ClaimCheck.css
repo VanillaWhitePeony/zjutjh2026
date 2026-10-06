@@ -1,0 +1,112 @@
+.claim-check {
+    padding: 16px;
+}
+
+h2 {
+    margin: 0 0 12px;
+    color: #333;
+}
+
+.claim-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.claim-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cover {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.info {
+    flex: 1;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.title {
+    font-weight: 600;
+    color: #333;
+}
+
+.status {
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: #eee;
+}
+
+.status_approved {
+    background: #e6ffe6;
+    color: #237804;
+}
+
+.status_rejected {
+    background: #fff1f0;
+    color: #cf1322;
+}
+
+.reason {
+    color: #666;
+    margin-top: 4px;
+    font-size: 14px;
+}
+
+.meta {
+    color: #999;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.claim-item button {
+    padding: 4px 12px;
+    border: 1px solid #1677ff;
+    background: #fff;
+    color: #1677ff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.claim-item button:hover {
+    background: #1677ff;
+    color: #fff;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.pagination button {
+    padding: 4px 12px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.error {
+    color: #d33;
+}

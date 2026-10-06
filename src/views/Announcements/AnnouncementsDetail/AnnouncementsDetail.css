@@ -1,0 +1,148 @@
+.announcementdetail_container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px;
+    min-height: 100vh;
+    background: #f5f7fb;
+    box-sizing: border-box;
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    background: #1677ff;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn:hover {
+    background: #4096ff;
+}
+
+.loading {
+    padding: 40px;
+    text-align: center;
+    color: #999;
+}
+
+.detail_card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    padding: 24px;
+    margin-top: 16px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.header h2 {
+    margin: 0;
+    color: #333;
+}
+
+.top_tag {
+    background: #fff1f0;
+    color: #e5484d;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 12px;
+}
+
+.info_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.info_list li {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+}
+
+.info_list li:last-child {
+    border-bottom: none;
+}
+
+.label {
+    flex-shrink: 0;
+    width: 100px;
+    color: #999;
+}
+
+.value {
+    color: #444;
+    word-break: break-all;
+}
+
+.admin {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.btn_offline {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #faad14;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn_offline:hover {
+    background: #ffc53d;
+}
+
+.btn_publish {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #52c41a;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn_publish:hover {
+    background: #73d13d;
+}
+
+.btn_delete {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #ff4d4f;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn_delete:hover {
+    background: #ff7875;
+}
+
+.empty {
+    padding: 40px;
+    text-align: center;
+    color: #999;
+}

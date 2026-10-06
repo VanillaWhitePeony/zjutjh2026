@@ -1,0 +1,54 @@
+.comment_post_container {
+    padding: 16px;
+}
+
+.input_textarea {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 90px;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.input_textarea:focus {
+    outline: none;
+    border-color: #1677ff;
+}
+
+.form_actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.counter {
+    color: #999;
+    font-size: 12px;
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #1677ff;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn:hover {
+    background: #4096ff;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

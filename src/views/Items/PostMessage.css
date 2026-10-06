@@ -1,0 +1,56 @@
+.publishPage {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 24px 16px;
+}
+
+.publishPage h2 {
+    margin: 0 0 16px;
+    color: #333;
+}
+
+.publishPage > div {
+    margin-bottom: 14px;
+}
+
+.publishPage label {
+    display: block;
+    margin-bottom: 4px;
+    color: #444;
+    font-size: 14px;
+}
+
+.publishPage input,
+.publishPage select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.publishPage button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #1677ff;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 8px;
+}
+
+.publishPage button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.publishPage img {
+    vertical-align: middle;
+}
+
+.error {
+    color: #d33;
+    font-size: 13px;
+}

@@ -2,7 +2,7 @@ import axios from 'axios'
 import{useUserStore}from '@/store/user'
 
 const request=axios.create({
-    baseURL:'',//到时候再填
+    baseURL:'',
     timeout:10000
 })
 

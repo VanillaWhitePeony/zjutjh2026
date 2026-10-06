@@ -2,11 +2,15 @@
 import { url } from '@/config.js';
 import { useUserStore } from '@/store/user';
 import axios from 'axios';
-import { defineProps, onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { isAdminRole } from '@/utils/role.js';
 
 const userStore = useUserStore();
 const router = useRouter();
+
+// 是否为管理员（统一角色判断）
+const isAdmin = computed(() => isAdminRole(userStore.user?.role));
 
 const announcement = ref(null);
 const loading = ref(false);
@@ -144,7 +148,7 @@ onMounted(getAnnouncementDetail);
                     <span class="value">{{ announcement.createTime }}</span>
                 </li>
             </ul>
-            <div v-if=" userStore.user.role==='admin' " class="admin">
+            <div v-if="isAdmin" class="admin">
                 <button
                     @click="goEdit"
                     class="btn"

@@ -2,12 +2,15 @@
 import { url } from '@/config.js';
 import { useUserStore } from '@/store/user';
 import axios from 'axios';
-import * as echarts from 'echarts';
-import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { isAdminRole } from '@/utils/role.js';
 
 const router = useRouter();
 const userStore = useUserStore()
+
+// 是否为管理员（统一角色判断）
+const isAdmin = computed(() => isAdminRole(userStore.user?.role));
 
 const data = ref({});
 const loading = ref(false);
@@ -149,7 +152,7 @@ onBeforeUnmount(function(){
 </script>
 
 <template>
-    <div v-if="! (userStore.user.role==='admin')" class="error">
+    <div v-if="!isAdmin" class="error">
         <span>不是管理员喵，你是凑企鹅</span>
     </div>
     <div v-else class="stats_container">

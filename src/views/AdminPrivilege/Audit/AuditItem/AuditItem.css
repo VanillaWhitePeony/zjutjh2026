@@ -1,0 +1,174 @@
+.audit_item_list_container {
+    padding: 20px;
+}
+
+.navbar {
+    margin-bottom: 16px;
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    background: #1677ff;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn:hover {
+    background: #4096ff;
+}
+
+h1 {
+    font-size: 20px;
+    color: #333;
+}
+
+.loading,
+.empty {
+    padding: 24px;
+    text-align: center;
+    color: #999;
+}
+
+.item_table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.item_table th,
+.item_table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.item_table th {
+    background: #fafafa;
+    color: #666;
+    font-weight: 600;
+}
+
+.item_row:hover {
+    background: #fafbfc;
+}
+
+.cover {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.cover_placeholder {
+    color: #bbb;
+}
+
+.type_tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.type_lost {
+    background: #fff1f0;
+    color: #cf1322;
+}
+
+.type_found {
+    background: #e6f4ff;
+    color: #1677ff;
+}
+
+.publisher {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar_placeholder {
+    color: #bbb;
+}
+
+.status_tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.status_pending {
+    background: #fff7e6;
+    color: #d48806;
+}
+
+.status_approved {
+    background: #e6ffe6;
+    color: #237804;
+}
+
+.status_rejected {
+    background: #fff1f0;
+    color: #cf1322;
+}
+
+.btn_approve,
+.btn_reject {
+    border: none;
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn_approve {
+    margin-right: 6px;
+    background: #52c41a;
+    color: #fff;
+}
+
+.btn_reject {
+    background: #ff4d4f;
+    color: #fff;
+}
+
+.btn_approve:disabled,
+.btn_reject:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page_change {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.btn_page,
+.btn_page_display {
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer;
+}
+
+.btn_page:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

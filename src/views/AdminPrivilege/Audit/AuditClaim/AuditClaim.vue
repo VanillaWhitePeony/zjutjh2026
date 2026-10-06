@@ -5,9 +5,13 @@ import { useUserStore } from '@/store/user';
 import axios from 'axios';
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { isAdminRole } from '@/utils/role.js';
 
 const router=useRouter();
 const userStore = useUserStore()
+
+// 是否为管理员（统一角色判断）
+const isAdmin = computed(() => isAdminRole(userStore.user?.role));
 
 const items=ref([]);
 const loading=ref(false);
@@ -155,7 +159,7 @@ function rejectItem(claim){
 </script>
 
 <template>
-    <div v-if="! (userStore.user.role==='admin')" class="error">
+    <div v-if="!isAdmin" class="error">
         <span>不是管理员喵，你是凑企鹅</span>
     </div>
     <div v-else class="audit_item_list_container">
