@@ -29,3 +29,84 @@
 .error {
     color: #d33;
 }
+
+.back {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fff;
+    color: #444;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+
+.back:hover {
+    border-color: #1677ff;
+    color: #1677ff;
+}
+
+.meta_row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.type_tag,
+.status_tag {
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 999px;
+}
+
+.type_tag {
+    background: #e6f4ff;
+    color: #1677ff;
+}
+
+.status_tag {
+    background: #f0f0f0;
+    color: #666;
+}
+
+.img_row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.img_row img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.action_bar {
+    margin: 16px 0;
+    padding-top: 16px;
+    border-top: 1px solid #eee;
+}
+
+.comment_section {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #eee;
+}
+
+.btn_claim {
+    border: 1px solid #1677ff;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #1677ff;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 12px;
+}
+
+.btn_claim:hover {
+    background: #4083f0;
+}

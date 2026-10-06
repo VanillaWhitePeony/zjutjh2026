@@ -5,9 +5,13 @@ import { useUserStore } from '@/store/user';
 import axios from 'axios';
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { isAdminRole } from '@/utils/role.js';
 
 const router = useRouter();
 const userStore = useUserStore();
+
+// 是否为管理员（统一角色判断）
+const isAdmin = computed(() => isAdminRole(userStore.user?.role));
 
 const announcements = ref([]);
 const loading = ref(false);
@@ -37,7 +41,7 @@ async function getAnnouncements(page = 1){
             pageSize: pageSize.value
         };
         
-        if(userStore.user.role === 'admin' && statusFilter.value){
+        if(isAdmin.value && statusFilter.value){
             params.status = statusFilter.value;
         }
 
@@ -133,12 +137,12 @@ function goToDetail(id){
     <div class="announcement_container">
         <nav class="navbar">
             <button @click="goHome" class="btn">不想看就别看（）</button>
-            <button v-if=" userStore.user.role === 'admin' " @click="goPost" class="btn">写小作文</button>
+            <button v-if="isAdmin" @click="goPost" class="btn">写小作文</button>
         </nav>
 
         <h1>全体目光向我看齐，我宣布个事，我香草白牡丹</h1>
 
-        <div v-if="userStore.user.role === 'admin'" class="filter_bar">
+        <div v-if="isAdmin" class="filter_bar">
             <span>状态筛选：</span>
             <select v-model="statusFilter" @change="changeStatus" class="status_select">
                 <option value="">全部</option>

@@ -9,6 +9,8 @@ import userDetailList from '../views/AdminPrivilege/UserDetailList/UserDetailLis
 import Home from '../views/Home/home.vue'; // 注意路径
 import PostMessage from '../views/Items/PostMessage.vue';
 import PostEdit from '../views/Items/PostEdit.vue';
+import ItemList from '../views/Items/ItemList.vue';
+import ItemDetails from '../views/Items/ItemDetails.vue';
 import userDetail from '../views/AdminPrivilege/UserDetail/UserDetail.vue'
 import stats from '../views/AdminPrivilege/stats/stats.vue'
 import auditItem from '../views/AdminPrivilege/Audit/AuditItem/AuditItem.vue'
@@ -18,6 +20,12 @@ import myClaimList from '../views/Claim/MyClaimList.vue'
 import claimDetails from '../views/Claim/ClaimDetails.vue'
 import claimCheck from '../views/Claim/ClaimCheck.vue'
 import favoriteList from '../views/Favorite/favoriteList.vue'
+import category from '../views/Category/Category.vue'
+import announcements from '../views/Announcements/Announcements/announcements.vue'
+import AnnouncementsPost from '../views/Announcements/AnnouncementsPost/AnnouncementsPost.vue'
+import AnnouncementsDetail from '../views/Announcements/AnnouncementsDetail/AnnouncementsDetail.vue'
+import AnnouncementsEdit from '../views/Announcements/AnnouncementsEdit/AnnouncementsEdit.vue'
+import myInform from '../views/Inform/myInform.vue'
 
 const routes = [
   {
@@ -67,6 +75,19 @@ const routes = [
     meta:{title:'编辑物品信息',
         requiresAuth:true
     }
+  },
+  {
+    path:'/items',
+    name:'ItemList',
+    component:ItemList,
+    meta:{title:'物品列表'}
+  },
+  {
+    path:'/itemDetails/:itemId',
+    name:'itemDetails',
+    component:ItemDetails,
+    props:true,
+    meta:{title:'物品详情'}
   },
   {
     path:'/userDetailList',
@@ -128,6 +149,44 @@ const routes = [
     name:'favoriteList',
     component:favoriteList,
     meta:{title:'我的收藏', requiresAuth:true}
+  },
+  {
+    path:'/category',
+    name:'category',
+    component:category,
+    meta:{title:'物品分类'}
+  },
+  {
+    path:'/announcements',
+    name:'announcements',
+    component:announcements,
+    meta:{title:'公告'}
+  },
+  {
+    path:'/announcementsPost',
+    name:'AnnouncementsPost',
+    component:AnnouncementsPost,
+    meta:{title:'发布公告', requiresAuth:true}
+  },
+  {
+    path:'/announcements/:id',
+    name:'AnnouncementsDetail',
+    component:AnnouncementsDetail,
+    props:true,
+    meta:{title:'公告详情'}
+  },
+  {
+    path:'/announcements/:id/edit',
+    name:'AnnouncementsEdit',
+    component:AnnouncementsEdit,
+    props:true,
+    meta:{title:'编辑公告', requiresAuth:true}
+  },
+  {
+    path:'/myInform',
+    name:'myInform',
+    component:myInform,
+    meta:{title:'通知列表', requiresAuth:true}
   },
 
 

@@ -3,8 +3,10 @@ import { url } from '@/config.js';
 import axios from 'axios';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { useUserStore } from '@/store/user';
 
 const route = useRoute();
+const userStore = useUserStore();
 
 const props = defineProps({
     itemId: { type: [String, Number], default: '' }
@@ -48,6 +50,38 @@ function goToPage(page) {
     getComments(page);
 }
 
+const currentUserId = computed(() => userStore.user?.userId);
+
+function isOwn(c) {
+    return !!currentUserId.value && c.author?.userId === currentUserId.value;
+}
+
+// 供父组件在发布留言后乐观插入新留言
+function addComment(c) {
+    if (c.commentId == null) c.commentId = 'local-' + Date.now();
+    comments.value.unshift(c);
+    total.value += 1;
+}
+
+async function deleteComment(c) {
+    try {
+        const res = await axios.delete(`${url}/items/${itemId.value}/comments/${c.commentId}`, {
+            headers: { Authorization: `Bearer ${userStore.token}` }
+        });
+        if (res.data.code === 200) {
+            comments.value = comments.value.filter(x => x.commentId !== c.commentId);
+            total.value = Math.max(0, total.value - 1);
+        } else {
+            alert(res.data.msg || '删除失败');
+        }
+    } catch (err) {
+        console.error('删除留言异常:', err);
+        alert('删除失败');
+    }
+}
+
+defineExpose({ addComment });
+
 onMounted(() => { getComments(1); });
 </script>
 
@@ -59,8 +93,11 @@ onMounted(() => { getComments(1); });
         <ul v-else class="comment_list">
             <li v-for="c in comments" :key="c.commentId" class="comment_item">
                 <div class="comment_head">
-                    <span class="author">{{ c.user?.nickname || c.nickname || '匿名' }}</span>
-                    <span class="time">{{ c.createTime }}</span>
+                    <span class="author">{{ c.author?.nickname || c.nickname || '匿名' }}</span>
+                    <span class="head_right">
+                        <button v-if="isOwn(c)" class="comment_delete" @click="deleteComment(c)">删除</button>
+                        <span class="time">{{ c.createTime }}</span>
+                    </span>
                 </div>
                 <p class="content">{{ c.content }}</p>
             </li>

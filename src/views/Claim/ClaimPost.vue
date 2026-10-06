@@ -11,6 +11,7 @@ import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 import { url } from '@/config.js'
+import { useUserStore } from '@/store/user'
 
 const props = defineProps({
   itemId: { type: [String, Number], default: '' }
@@ -19,6 +20,7 @@ const props = defineProps({
 const emit = defineEmits(['submitted'])
 
 const route = useRoute()
+const userStore = useUserStore()
 // 优先取 prop，其次取路由参数/查询参数
 const currentItemId = computed(() => props.itemId || route.params.itemId || route.query.itemId || '')
 
@@ -28,6 +30,8 @@ const form = ref({
   proofImages: [],
   contactValue: ''
 })
+// 预填路由带来的 itemId（从物品详情点击“申请认领”进入时）
+form.value.itemId = currentItemId.value || ''
 
 const loading = ref(false)
 const uploading = ref(false)
@@ -88,17 +92,27 @@ function removeImage(index) {
 }
 
 async function submit() {
-  const itemId = currentItemId.value
-  if (!itemId) {
-    errorMessage.value = '缺少物品信息，无法提交认领申请'
+  const rawItemId = String(form.value.itemId).trim()
+  if (!rawItemId) {
+    errorMessage.value = '请输入物品 ID'
     return
   }
-  if (!form.value.claimReason.trim()) {
+  const itemId = Number(rawItemId)
+  if (!Number.isInteger(itemId) || itemId <= 0) {
+    errorMessage.value = '物品 ID 必须为正整数'
+    return
+  }
+  const reason = form.value.claimReason.trim()
+  if (!reason) {
     errorMessage.value = '请填写认领理由'
     return
   }
-  if (!form.value.contactValue.trim()) {
-    errorMessage.value = '请填写联系方式'
+  if (reason.length < 10) {
+    errorMessage.value = '认领理由至少 10 字'
+    return
+  }
+  if (reason.length > 500) {
+    errorMessage.value = '认领理由不能超过 500 字'
     return
   }
   if (uploading.value) {
@@ -109,11 +123,16 @@ async function submit() {
   loading.value = true
   errorMessage.value = ''
   try {
-    const res = await axios.post(`${url}/claims`, {
+    const body = {
       itemId: Number(itemId),
-      claimReason: form.value.claimReason.trim(),
-      proofImages: form.value.proofImages,
-      contactValue: form.value.contactValue.trim()
+      claimReason: reason
+    }
+    if (form.value.proofImages.length) body.proofImages = form.value.proofImages
+    const contactValue = form.value.contactValue.trim()
+    if (contactValue) body.contactValue = contactValue
+
+    const res = await axios.post(`${url}/claims`, body, {
+      headers: { Authorization: `Bearer ${userStore.token}` }
     })
     if (res.data.code === 200) {
       alert('认领申请提交成功，等待处理')
@@ -146,11 +165,17 @@ async function submit() {
     <h2>申请认领</h2>
 
     <div>
+      <label>物品 ID</label>
+      <input v-model="form.itemId" type="number" placeholder="例如：20001">
+    </div>
+
+    <div>
       <label>认领理由</label>
       <textarea
         v-model="form.claimReason"
         placeholder="例如：这是我丢失的伞，伞柄刻有我的名字缩写 WX"
         rows="3"
+        maxlength="500"
       ></textarea>
     </div>
 
@@ -171,7 +196,7 @@ async function submit() {
     </div>
 
     <div>
-      <label>联系方式</label>
+      <label>联系方式（选填，不填则使用账号绑定的手机号）</label>
       <input v-model="form.contactValue" type="text" placeholder="例如：13800138000">
     </div>
 

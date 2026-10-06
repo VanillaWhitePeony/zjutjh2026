@@ -1,110 +1,125 @@
 <script setup>
-    import{ ref,onMounted }from 'vue';
-    import{ useRouter }from 'vue-router';
-    import request from '@/Request/request';
-    import {useUserStore} from '@/store/user';
-    import PostDelete from './PostDelete.vue';
-    import{ form }from '@/views/Items/PostMessage.vue'
-    const route=useRouter()
-    const itemId=number(route.params.itemId)//??????
+import { ref, onMounted, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import axios from 'axios'
+import { url } from '@/config.js'
+import { useUserStore } from '@/store/user'
+import { isAdminRole } from '@/utils/role.js'
+import favorite from '@/views/Favorite/favorite.vue'
+import commentList from '@/views/Comments/commentList.vue'
+import commentsPost from '@/views/Comments/commentsPost.vue'
 
-    const loading=ref(false)
-    const item=ref<ItemDetail |null>(null)
+const route = useRoute()
+const router = useRouter()
+const userStore = useUserStore()
 
-    const isAdmin=adminRoles==='sys_admin'||'lf_admin';
+const itemId = route.params.itemId || route.query.itemId
 
-    const status = {
-        pending:'审核中',
-        rejected:'已驳回',
-        closed:'已关闭',
-        approved:'已通过',
-        claimed:'已发布'
+const loading = ref(false)
+const errorMessage = ref('')
+const item = ref(null)
+
+// 是否为管理员（统一角色判断）
+const isAdmin = computed(() => isAdminRole(userStore.user?.role))
+
+const statusMap = {
+  pending: '审核中',
+  rejected: '已驳回',
+  closed: '已关闭',
+  approved: '已通过',
+  claimed: '已认领'
+}
+
+const contactTypeMap = {
+  wechat: '微信',
+  phone: '手机号',
+  qq: 'QQ',
+  email: '邮箱'
+}
+
+// 留言发布成功后：把新留言追加到列表顶部
+const commentListRef = ref(null)
+function onCommentPosted(comment) {
+  commentListRef.value?.addComment(comment)
+}
+
+function goClaim() {
+  router.push({ name: 'claimPost', params: { itemId: item.value.itemId } })
+}
+
+async function fetchDetail() {
+  loading.value = true
+  errorMessage.value = ''
+  try {
+    const res = await axios.get(`${url}/items/${itemId}`)
+    if (res.data.code === 200) {
+      item.value = res.data.data
+    } else {
+      errorMessage.value = res.data.msg || '获取详情失败'
     }
+  } catch (err) {
+    console.error('获取详情异常:', err)
+    errorMessage.value = '获取详情失败'
+  } finally {
+    loading.value = false
+  }
+}
 
-
-    const contactType={
-        weichat:'微信',
-        phone:'手机号',
-        qq:'QQ',
-        email:'邮箱'
-    }
-
-
-
-
-    async function fetchDetails() {
-        loading.value=true;
-        try{
-            item.value=await request.get(`/api/items/${itemId}`)
-        }finally{
-            loading.value=false;
-        }
-    }
-    
-onMounted(fetchDetails)
-
+onMounted(fetchDetail)
 </script>
 
-
 <template>
-    <div>
-        <DeletePost
-        :post-id="post.id"
-        :owner-id="post.ownerId"
-        :current-user-id="currentUserId"
-        :is-admin="isAdmin"
-        :redirect-home="true"
-        redirect-to="/home"
+  <div class="ItemDetails">
+    <button class="back" @click="router.back()">返回</button>
+
+    <div v-if="loading">加载中……</div>
+
+    <div v-else-if="errorMessage" class="error">
+      <p>{{ errorMessage }}</p>
+      <button @click="fetchDetail">重试</button>
+    </div>
+
+    <div v-else-if="item">
+      <div v-if="isAdmin" class="adminStatus">当前状态：{{ statusMap[item.status] || item.status }}</div>
+
+      <h1>{{ item.title }}</h1>
+
+      <div class="meta_row">
+        <span class="type_tag">{{ item.type === 'lost' ? '寻物启事' : '失物招领' }}</span>
+        <span class="status_tag">{{ statusMap[item.status] || item.status }}</span>
+        <span v-if="item.category" class="status_tag">{{ item.category.name }}</span>
+      </div>
+
+      <div v-if="item.images && item.images.length" class="img_row">
+        <img v-for="img in item.images" :key="img" :src="img" alt="物品图片">
+      </div>
+
+      <p>地点：{{ item.location || '-' }}</p>
+      <p>{{ item.type === 'lost' ? '丢失时间' : '拾获时间' }}：{{ item.lostTime || '-' }}</p>
+      <p>发布时间：{{ item.createTime || '-' }}</p>
+      <p>描述：{{ item.description || '暂无描述' }}</p>
+      <p>联系方式（{{ contactTypeMap[item.contactType] || item.contactType }}）：{{ item.contactValue || '-' }}</p>
+      <p>发布者：{{ item.publisher?.nickname || '匿名' }}</p>
+
+      <!-- 申请认领 / 收藏 -->
+      <div class="action_bar">
+        <button class="btn_claim" @click="goClaim">申请认领</button>
+        <favorite
+          :item-id="item.itemId"
+          :is-favorited="!!item.isFavorited"
+          @change="item.isFavorited = $event"
         />
+      </div>
+
+      <!-- 留言 -->
+      <section class="comment_section">
+        <commentsPost :item-id="item.itemId" @posted="onCommentPosted" />
+        <commentList ref="commentListRef" :item-id="item.itemId" />
+      </section>
     </div>
-    <div class="ItemDetails">
-        <div v-if="loading">在努力中了……</div>
-        <div v-else-if="errorMessage">
-            <p>{{ errorMessage }}</p>
-            <button @click="fetchDetail">再给一次机会吧！</button>
-        </div>
-
-        <div v-else-if="item">
-            <div v-if="isAdmin" class="adminStatus">
-                当前状态：{{items.status}}
-            </div>
-        </div>
-
-        <h1>{{form.title}}</h1>
-
-        <div>
-            <span>{{ form.type==='lost'?'寻物':'招领' }}</span>
-            <span>浏览{{ form.viewCount }}</span>
-        </div>
-
-        <div>
-            <p>类别：{{ form.category||'-' }}</p>
-            
-        </div>
-
-        <div>
-            {{ form.type==='lost'?'丢失时间':'拾取时间' }}:
-            {{ formatTime(form.time) }}
-        </div>
-
-         <div>
-            {{ form.type==='lost'?'丢失地点':'拾取地点' }}:
-            {{ form.location||'-' }}
-        </div>
-
-        <div>
-            <p>描述：</p>
-            <p>{{ form.description || '暂无描述' }}</p>
-        </div>
-
-
-        <div>
-            <p>联系方式（{{ form.contactType }}）：</p>
-            <p>{{ form.contactValue || '-' }}</p>
-        </div>
-
-        <div>
-            <p>发布者：{{ item.publisher?.nickname}}</p>
-        </div>
-    </div>
+  </div>
 </template>
+
+<style scoped>
+@import 'ItemDetails.css';
+</style>

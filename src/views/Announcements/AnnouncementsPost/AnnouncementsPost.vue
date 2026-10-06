@@ -2,11 +2,15 @@
 import { url } from '@/config.js';
 import { useUserStore } from '@/store/user';
 import axios from 'axios';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { isAdminRole } from '@/utils/role.js';
 
 const router = useRouter();
 const userStore = useUserStore();
+
+// 是否为管理员（统一角色判断）
+const isAdmin = computed(() => isAdminRole(userStore.user?.role));
 
 const title = ref('');
 const content = ref('');
@@ -68,7 +72,7 @@ function goBack(){
 </script>
 
 <template>
-    <div v-if="!(userStore.user.role === 'admin')" class="error">
+    <div v-if="!isAdmin" class="error">
         <span>不是管理员喵，你是凑企鹅</span>
     </div>
     <div v-else class="announcement_post_container">

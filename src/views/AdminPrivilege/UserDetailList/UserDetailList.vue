@@ -5,9 +5,13 @@ import { useUserStore } from '@/store/user';
 import axios from 'axios';
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { isAdminRole, ROLE_MAP as roleMap } from '@/utils/role.js';
 
 const router=useRouter();
 const userStore = useUserStore()
+
+// 是否为管理员（统一角色判断）
+const isAdmin = computed(() => isAdminRole(userStore.user?.role));
 
 const users=ref([]);
 const loading=ref(false);
@@ -23,12 +27,6 @@ const totalPages=computed(
         return Math.ceil(total.value/pageSize.value);
     }
 )
-
-const roleMap={
-    student:'学生',
-    teacher:'教师',
-    sys_admin:'系统管理员'
-};
 
 async function getUsers(page=1){
     loading.value=true;
@@ -116,7 +114,7 @@ function goToDetail(id){
 </script>
 
 <template>
-    <div v-if="! (userStore.user.role==='admin')" class="error">
+    <div v-if="!isAdmin" class="error">
         <span>不是管理员喵，你是凑企鹅</span>
     </div>
     <div v-else class="user_detail_list_container">

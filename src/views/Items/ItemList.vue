@@ -1,161 +1,228 @@
 <!--实现功能：筛选+分页+搜索-->
 <script setup>
-    import {ref,reactive,computed,watch,onMounted} from 'vue'
-    import { useRouter } from 'vue-router';
-    import {useUserStore} from '@/store/user'
-    import { request } from '@/Request/request';
+import { ref, reactive, computed, watch, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useUserStore } from '@/store/user'
+import axios from 'axios'
+import { url } from '@/config.js'
+import { isAdminRole } from '@/utils/role.js'
 
-    const router=useRouter();
-    const userStore=useUserStore();
+const router = useRouter()
+const route = useRoute()
+const userStore = useUserStore()
 
-    const adminRoles=['lf_admin','sys_admin']//管理员角色名单，系统管理员+审核管理员
-    const isAdmin=computed(()=>adminRoles.includes())//????不太对，要改
-    const normalVisableStatus=['approved','claimed','closed']//普通账号能见状态
-    const adminVisableStatus=['pending','rejected']//管理员能见
+// 是否为管理员（统一角色判断）
+const isAdmin = computed(() => isAdminRole(userStore.user?.role))
 
-//拾取丢失类型选项
-    const typeOptions=[
-        {label:'寻物启事',value:'LOST'},
-        {label:'失物招领',value:'FOUND'}
-    ]
+// 普通账号能看到的状态；pending / rejected 仅管理员可筛
+const normalVisibleStatus = ['approved', 'claimed', 'closed']
 
-//物品类型选项
-const categoryOptions = [
-  { label: '证件卡类', value: 'CARD' },
-  { label: '电子产品', value: 'DIGITAL' },
-  { label: '钱包钥匙', value: 'WALLET' },
-  { label: '书籍文具', value: 'BOOK' },
-  { label: '衣物饰品', value: 'CLOTHING' },
-  { label: '其他', value: 'OTHER' }
-]
-
-//状态选项
+// 状态选项（值统一用接口枚举的小写）
 const allStatusOptions = [
-  { label: '待审核', value: 'PENDING' },
-  { label: '已通过', value: 'APPROVED' },
-  { label: '已驳回', value: 'REJECTED' },
-  { label: '已认领', value: 'CLAIMED' },
-  { label: '已关闭', value: 'CLOSED' }
+  { label: '待审核', value: 'pending' },
+  { label: '已通过', value: 'approved' },
+  { label: '已驳回', value: 'rejected' },
+  { label: '已认领', value: 'claimed' },
+  { label: '已关闭', value: 'closed' }
 ]
 
-//按照用户状态返回物品状态
-    const visibleStatusOptions =computed(()=>{
-        if(isAdmin.value)  return allStatusOptions;
-        return allStatusOptions.filter((o)=>NORMAL_VISIBLE_STATUSES.includes(o.value))//o???
-    })
+// 拾取/丢失类型选项
+const typeOptions = [
+  { label: '寻物启事', value: 'lost' },
+  { label: '失物招领', value: 'found' }
+]
 
-//查询条件
-const query=reactive({
-    type:'',
-    keyword:'',
-    category:'',
-    page:'',
-    pageSize:''
+// 按照用户身份返回可见的状态选项
+const visibleStatusOptions = computed(() => {
+  if (isAdmin.value) return allStatusOptions
+  return allStatusOptions.filter((o) => normalVisibleStatus.includes(o.value))
 })
 
+const statusMap = {
+  pending: '待审核',
+  approved: '已通过',
+  rejected: '已驳回',
+  claimed: '已认领',
+  closed: '已关闭'
+}
 
-//日期范围查询用,单独拿出来
-const dateRange=ref([]);
+// 查询条件
+const query = reactive({
+  type: '',
+  keyword: '',
+  location: '',
+  status: '',
+  page: 1,
+  pageSize: 12
+})
 
-//
-const list=ref([]);
-const totalAmount=ref(0);
-const loading=ref(false);//加载状态
+const list = ref([])
+const total = ref(0)
+const loading = ref(false)
 
-//权限的核心逻辑！！！最后写！因为我现在还不是很会！
+const totalPages = computed(() => Math.ceil(total.value / query.pageSize))
 
-//ai建议加上的，防止空串被后端过滤掉
-function buildQueryParams(){
-    const params={
-        keyword:query.keyword || undefined,
-        type: query.type || undefined,
-        category: query.category ||undefined,
-        startDate: dateRange.value?.[0] || undefined,
-        endDate: dateRange.value?.[1]  ||undefined,
-        page: query.page,
-        pageSize:query.pageSize
-    }
+// 组装查询参数，空串不传（防止空串被后端过滤掉）
+function buildQueryParams() {
+  const params = {
+    page: query.page,
+    pageSize: query.pageSize
+  }
+  if (query.keyword) params.keyword = query.keyword
+  if (query.type) params.type = query.type
+  if (query.location) params.location = query.location
+  // status 仅管理员可传 pending/rejected；普通账号即便传了后端也会忽略
+  if (query.status) params.status = query.status
+  return params
 }
 
 async function fetchList() {
-    loading.value=true;
-    try{
-        const res =await request.get('/api/items',{params:buildQueryParams()})
-        list.value=res.data?.records??[]
-        totalAmount.value=res.data?.totalAmount??0
-    }catch(err){
-        console.error(err)
-        erMessage.error('加载失败')
-        list.value=[]
-        totalAmount.value=0
-    }finally{
-        loading.value=false
+  loading.value = true
+  try {
+    const res = await axios.get(`${url}/items`, { params: buildQueryParams() })
+    if (res.data.code === 200) {
+      const d = res.data.data || {}
+      list.value = d.list || []
+      total.value = Number(d.total) || 0
+      query.page = Number(d.page) || query.page
+    } else {
+      alert(res.data.msg || '加载失败')
     }
+  } catch (err) {
+    console.error(err)
+    alert('加载失败')
+    list.value = []
+    total.value = 0
+  } finally {
+    loading.value = false
+  }
 }
 
-function search() {//搜索从首页开始
+function search() {
   query.page = 1
   fetchList()
 }
 
-function research() {//重新搜索要把村的信息清空
-  query.keyword  = ''
-  query.type     = ''
-  query.category = ''
-  query.status   = ''
-  query.page     = 1
-  dateRange.value = []
-  fetchList()
-}
-
-function changePageSize() {//改变最大条数时重新从第一页开始
+function reset() {
+  query.keyword = ''
+  query.type = ''
+  query.location = ''
+  query.status = ''
   query.page = 1
   fetchList()
 }
 
-function goDetails(item) {//点击进入详情页
-  router.push({ name: 'ItemDetails', params: { id: item.id } })
+function goToPage(page) {
+  page = Number(page)
+  if (page < 1 || page > totalPages.value || page === query.page) return
+  query.page = page
+  fetchList()
 }
 
-watch(//ai加的，下拉筛选变化时及时刷新
-  () => [query.type, query.category, query.status, dateRange.value],
+function changePageSize() {
+  query.page = 1
+  fetchList()
+}
+
+function goDetails(item) {
+  router.push({ name: 'itemDetails', params: { itemId: item.itemId } })
+}
+
+// 下拉筛选变化时（类型/状态/地点）及时刷新；keyword 由搜索按钮触发
+watch(
+  () => [query.type, query.status, query.location],
   () => {
     query.page = 1
     fetchList()
   }
 )
 
-
+onMounted(() => {
+  // 从首页搜索带过来的关键词 / 分类页带过来的类型
+  if (route.query.keyword) query.keyword = route.query.keyword
+  if (route.query.type) query.type = route.query.type
+  fetchList()
+})
 </script>
 
 <template>
-    <div class="itemListPage">
-        <!--分页-->
-        <div class="paginate">
-            <el-paginate
-                v-model:current-page="query.page"
-                v-model:page-size="query.pageSize"
-                :total="totalAmount"
-                layout="total,prev,pager,next,jumper"
-                @current-change="fetchList"/>
-        </div>
-
-        <div class="max-mount-everypage">
-            <span>每页</span>
-            <el-input-number
-                v-model="query.pageSize"
-                :min="1"
-                :max="50"
-                step-strictly
-                controls-position="right"
-                size="small"
-                @change="changePageSize"/>
-        </div>
+  <div class="itemListPage">
+    <!-- 搜索 + 筛选 -->
+    <div class="filter_bar">
+      <div class="search_row">
+        <input
+          v-model="query.keyword"
+          class="search_input"
+          placeholder="搜索标题 / 描述"
+          maxlength="50"
+          @keyup.enter="search"
+        >
+        <button class="btn" @click="search">搜索</button>
+        <button class="btn_ghost" @click="reset">重置</button>
+      </div>
+      <div class="filter_row">
+        <select v-model="query.type" class="select">
+          <option value="">全部类型</option>
+          <option v-for="t in typeOptions" :key="t.value" :value="t.value">{{ t.label }}</option>
+        </select>
+        <select v-model="query.status" class="select">
+          <option value="">全部状态</option>
+          <option v-for="s in visibleStatusOptions" :key="s.value" :value="s.value">{{ s.label }}</option>
+        </select>
+        <input
+          v-model="query.location"
+          class="search_input"
+          placeholder="地点筛选"
+          @keyup.enter="search"
+        >
+      </div>
     </div>
 
-    <!--搜索-->
-    
+    <!-- 列表 -->
+    <div v-if="loading" class="loading">加载中...</div>
+    <div v-else-if="list.length === 0" class="empty">没有找到相关物品</div>
+    <ul v-else class="item_list">
+      <li v-for="item in list" :key="item.itemId" class="item_card" @click="goDetails(item)">
+        <img
+          v-if="item.coverImage || (item.images && item.images[0])"
+          class="cover"
+          :src="item.coverImage || item.images[0]"
+          alt=""
+        >
+        <div class="info">
+          <div class="title_row">
+            <span class="title">{{ item.title }}</span>
+            <span class="status_tag">{{ statusMap[item.status] || item.status }}</span>
+          </div>
+          <p class="meta">
+            <span>{{ item.type === 'lost' ? '寻物启事' : '失物招领' }}</span>
+            <span v-if="item.location">{{ item.location }}</span>
+          </p>
+          <p class="time">{{ item.createTime }}</p>
+        </div>
+      </li>
+    </ul>
 
-
-
+    <!-- 分页 -->
+    <div class="paginate">
+      <span class="page_size">
+        每页
+        <select v-model="query.pageSize" @change="changePageSize">
+          <option :value="10">10</option>
+          <option :value="20">20</option>
+          <option :value="50">50</option>
+        </select>
+      </span>
+      <div v-if="totalPages > 1" class="page_btns">
+        <button class="btn_page" :disabled="query.page === 1" @click="goToPage(query.page - 1)">上一页</button>
+        <span class="page_info">{{ query.page }} / {{ totalPages }}</span>
+        <button class="btn_page" :disabled="query.page === totalPages" @click="goToPage(query.page + 1)">下一页</button>
+      </div>
+      <span class="total_text">共 {{ total }} 条</span>
+    </div>
+  </div>
 </template>
+
+<style scoped>
+@import 'ItemList.css';
+</style>

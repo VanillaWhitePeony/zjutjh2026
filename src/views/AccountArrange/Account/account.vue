@@ -1,15 +1,10 @@
 <script setup>
 import { useUserStore } from '@/store/user';
 import { useRouter } from 'vue-router';
+import { ROLE_MAP as roleMap } from '@/utils/role.js';
 
 const router = useRouter()
 const userStore = useUserStore()
-
-const roleMap = {
-    student: '学生',
-    teacher: '教师',
-    admin: '管理员'
-}
 
 function goChangePassword() {
     router.push({ name: 'ChangePassword' })

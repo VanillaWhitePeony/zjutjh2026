@@ -1,9 +1,28 @@
 <script setup>
 import { useUserStore } from '@/store/user';
 import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { url } from '@/config.js';
 
 const router = useRouter()
 const userStore = useUserStore()
+
+const posts = ref([])
+const searchKeyword = ref('')
+
+async function fetchPosts() {
+  try {
+    const res = await axios.get(`${url}/items`, { params: { page: 1, pageSize: 12 } })
+    if (res.data.code === 200) {
+      posts.value = (res.data.data && res.data.data.list) || []
+    }
+  } catch (err) {
+    console.error('拉取首页帖子失败:', err)
+  }
+}
+
+onMounted(fetchPosts)
 
 function goLogin() {
   router.push({ name: 'Login' })
@@ -32,6 +51,15 @@ function goAnnouncements(){
 }
 function goFavorite(){
     router.push({ name:'favoriteList'})
+}
+function goInform(){
+    router.push({ name:'myInform'})
+}
+function goSearch(){
+    router.push({ name:'ItemList', query:{ keyword: searchKeyword.value } })
+}
+function goDetail(item){
+    router.push({ name:'itemDetails', params:{ itemId: item.itemId } })
 }
 </script>
 
@@ -76,7 +104,9 @@ function goFavorite(){
                 <button class="nav_item" @click="goPost">发布帖子</button>
                 <button class="nav_item" @click="goClaim">认领物品</button>
                 <button class="nav_item" @click="goCategory">物品分类</button>
+                <button class="nav_item" @click="goAnnouncements">查看公告</button>
                 <button class="nav_item" @click="goFavorite">我的收藏</button>
+                <button class="nav_item" @click="goInform">通知列表</button>
             </nav>
 
             <div class="content">
@@ -91,16 +121,20 @@ function goFavorite(){
 
                 <section class="posts">
                     <div class="search_box">
-                        <input type="text" placeholder="搜索关键词">
-                        <button class="search_btn">搜索</button>
+                        <input v-model="searchKeyword" type="text" placeholder="搜索关键词" @keyup.enter="goSearch">
+                        <button class="search_btn" @click="goSearch">搜索</button>
                     </div>
                     <div class="post_grid">
-                        <div class="post_card">失物招领帖子</div>
-                        <div class="post_card">失物招领帖子</div>
-                        <div class="post_card">失物招领帖子</div>
-                        <div class="post_card">失物招领帖子</div>
-                        <div class="post_card">失物招领帖子</div>
-                        <div class="post_card">失物招领帖子</div>
+                        <div
+                            v-for="post in posts"
+                            :key="post.itemId"
+                            class="post_card"
+                            @click="goDetail(post)"
+                        >
+                            <span class="post_title">{{ post.title }}</span>
+                            <span class="post_meta">{{ post.type === 'lost' ? '寻物启事' : '失物招领' }}{{ post.location ? ' · ' + post.location : '' }}</span>
+                        </div>
+                        <div v-if="posts.length === 0" class="post_empty">暂无帖子</div>
                     </div>
                 </section>
             </div>

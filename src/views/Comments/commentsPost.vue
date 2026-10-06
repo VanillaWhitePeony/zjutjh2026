@@ -36,9 +36,19 @@ async function submit() {
             { headers: { Authorization: `Bearer ${userStore.token}` } }
         );
         if (response.data.code === 200) {
+            const created = response.data.data || {};
+            const newComment = {
+                ...created,
+                content: text,
+                author: created.author || {
+                    userId: userStore.user?.userId,
+                    nickname: userStore.user?.nickname || userStore.user?.username || '我'
+                },
+                createTime: created.createTime || new Date().toISOString()
+            };
             alert('留言成功');
             content.value = '';
-            emit('posted');
+            emit('posted', newComment);
         } else {
             alert(response.data.msg || '留言失败');
         }

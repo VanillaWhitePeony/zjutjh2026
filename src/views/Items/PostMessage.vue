@@ -2,6 +2,7 @@
     import { computed, onMounted, ref } from 'vue';
     import { useRouter } from 'vue-router';
     import request from '@/Request/request';
+    import { useUserStore } from '@/store/user';
 
 
     const props = defineProps({
@@ -34,43 +35,47 @@
     const errorMessage=ref('');
 
     const router=useRouter();//router
+    const userStore=useUserStore();
 
     const MAX_IMAGE_COUNT=5;
     const MAX_IMAGE_SIZE=5*1024*1024//接口规定的5mb
 
-    /*onMounted(async()=>{
+    onMounted(async()=>{
+        // 已登录校验：未登录才跳登录，已登录直接进入发布页
+        if(!userStore.isLoggedIn){
+            router.push({ name:'Login', query:{ redirect:'/postMessage' } });
+            return;
+        }
+        // 仅编辑场景需要回填物品信息（发布场景无需拉取用户信息）
+        if(!isEdit.value) return;
         pageLoading.value=true;
         try{
-            const response=await request.get('/api/user/current');
-            currentUserId.value=response.data.id;
-            if(isEdit.value){
-                const postResponse=await request.get(`/api/items/${props.postId}`);
-                const postData=postResponse.data;
-                ownerId.value=postData.ownerId;
-                if(!isOwner.value){
-                    alert('你没有权限编辑该物品信息');
-                    router.push('/home');
-                    return;
-                }
-                form.value={
-                    type:postData.type,
-                    title:postData.title,
-                    category:postData.category,
-                    description:postData.description,
-                    location:postData.location,
-                    lostTime:postData.lostTime,
-                    images:postData.images||[],
-                    contactType:postData.contactType,
-                    contactValue:postData.contactValue
-                }
+            const postResponse=await request.get(`/api/items/${props.postId}`);
+            const postData=postResponse.data;
+            ownerId.value=postData.ownerId;
+            if(!isOwner.value){
+                alert('你没有权限编辑该物品信息');
+                router.push('/home');
+                return;
+            }
+            form.value={
+                type:postData.type,
+                title:postData.title,
+                category:postData.category,
+                description:postData.description,
+                location:postData.location,
+                lostTime:postData.lostTime,
+                images:postData.images||[],
+                contactType:postData.contactType,
+                contactValue:postData.contactValue
             }
         }catch(error){
-            alert('获取用户信息失败，请重新登录');
-            router.push('/login');
+            alert('获取物品信息失败');
+            router.push('/home');
         }finally{
             pageLoading.value=false;
         }
-    })*/
+    })
 
     /*照片的处理 */
     async function handleFileChange(e) {
