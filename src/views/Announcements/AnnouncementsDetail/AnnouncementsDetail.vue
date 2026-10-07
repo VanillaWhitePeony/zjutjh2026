@@ -144,7 +144,7 @@ onMounted(getAnnouncementDetail);
                     <span class="value">{{ announcement.createTime }}</span>
                 </li>
             </ul>
-            <div v-if=" userStore.user.role==='admin' " class="admin">
+            <div v-if=" userStore.user?.role==='admin' " class="admin">
                 <button
                     @click="goEdit"
                     class="btn"
